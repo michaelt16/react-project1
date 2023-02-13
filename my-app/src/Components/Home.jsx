@@ -1,4 +1,4 @@
-import wallpaper from "./Images/d-a-v-i-d-s-o-n-l-u-n-a-KeGToDVN0l4-unsplash.jpg"
+
 export default function Home(){
     return(
         

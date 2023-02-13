@@ -6,11 +6,9 @@ export default function Header() {
             <div className="flex items-center">
             <img className="h-20 px-8 py-2 hover:cursor-pointer inline"src= {tvLogo} />
             </div>
-            <div className="">
-            <button className="bg-gray-500 w-20 text-white text-[10px] font-semibold py-2 px-2 mr-10 border border-gray-500 hover:border-transparent rounded">About Us</button>
+            <div >
+            <button className="bg-gray-600 w-20 text-white text-[10px] font-semibold py-2 px-2 mr-10  rounded-lg hover:bg-gray-700">About Us</button>
             </div>    
-        </nav>
-       
-          
+        </nav> 
     );
 }
