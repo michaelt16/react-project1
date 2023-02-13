@@ -2,7 +2,9 @@ export default function MovieList(){
     return(
         <div className="w-3/4 p-4 bg-gray-200">
             <h2 className="m-4 font-bold mb-4">Movies</h2>
+         
             <div className="grid grid-cols-6 gap-4 grid-rows-2 mt-6 mx-4">
+               
                 
                     <div className="border  mb-2 rounded-xl shadow relative bg-gray-100 cursor-pointer">
                         <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xCn3VOST64XpOA8x0gaQkQiZtZY.jpg" className="rounded mb-2"></img>
