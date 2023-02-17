@@ -7,7 +7,7 @@ export default function MovieList(){
     useEffect(()=>{
         if (movies.length > 0){
             const temp = localStorage.getItem("key")
-            
+            console.log(JSON.parse(temp))
         }else{
             fetch("https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=11")
             .then(resp=>resp.json())
