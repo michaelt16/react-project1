@@ -1,10 +1,9 @@
 import Header from './Header';
 import Home from "./Home";
 import Browse from "./Browse"
-
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import css from "../App.css"
+
 function App() {
   return (
     <div className="App">
