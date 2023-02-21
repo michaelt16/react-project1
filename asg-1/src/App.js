@@ -5,21 +5,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import css from "./App.css"
 
 function App() {
-  return (
-    <div className="App">
-       <BrowserRouter>
-      <Header/>
-     
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Browse/>} />
-        <Route path="/browse" element={<Browse />} />
-      </Routes>
-    </BrowserRouter>
+
+
+    return (
+      <div className="App">
+        <BrowserRouter>
+        <Header/>
       
-      
-    </div>
-  );
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Browse/>} />
+          <Route path="/browse" element={<Browse />} />
+        </Routes>
+      </BrowserRouter>
+        
+        
+      </div>
+    );
 }
 
 export default App;
