@@ -1,10 +1,12 @@
 # COMP 4513 REACT MOVIE APP
 
+# SAM IF YOU CAN SEE THIS READ ME EMAIL ME AT CHAOXDRAG920@GMAIL.COM
+ive been trying to find internet for discord. limited internet here but yea email me for communication 
 
 ## **Description**
 This web apps allows the browsing, favoriting and filtering of movies
 
-## **Developing**
+## **Developing** 
 `main` will be used as the production branch. We should only be adding code to the `main` branch by merging in feature branches.
 
 ### Feature Branches
