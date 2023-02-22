@@ -19,7 +19,7 @@ export default function Filter(){
                 <option>After</option>
                 <option>Between</option>
             </select>
-            <input type="date" className="bg-white border border-gray-400 rounded p-2 mb-20 w-full" />
+            <input type="date" className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" />
             <h3 className="text-md mb-2">Rating</h3>
             <input type="range" min="0" max="10" className="w-full mb-12" />
             <div className="flex justify-center">

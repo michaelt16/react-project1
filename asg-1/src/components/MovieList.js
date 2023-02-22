@@ -33,11 +33,15 @@ export default function MovieList() {
     const broken_image = require("../img/broken_image.png");
 
     return (
-        <div className="w-3/4 p-4 bg-gray-200 overflow-y-scroll hide-scroll">
+        <div className="w-2/4 p-4 bg-gray-200 overflow-y-scroll hide-scroll">
             <h2 className="m-4 font-bold mb-4">Movies</h2>
-            <div className="grid grid-cols-6 gap-4 grid-rows-2 mt-6 mx-4">
+            <div className="grid grid-cols-4 gap-4 grid-rows-2 mt-4 mx-4">
             {movies.map((movie, index) => 
-                <Movie index={index} movie={movie} handleImageError={handleImageError}/>)}
+                <Movie
+                    key={movie.id}
+                    index={index}
+                    movie={movie}
+                    handleImageError={handleImageError}/>)}
             </div>
         </div>
     );
