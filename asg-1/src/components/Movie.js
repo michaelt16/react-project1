@@ -1,23 +1,28 @@
+import { useState } from "react";                                                                                                                               
+
 export default function Movie(props) {
     const movie = props.movie;
     const index = props.index;
+
+    const [refresh, setRefresh] = useState(false);
 
     // this method replaces icon with error image
     const imageHandler = (e) => {
         props.handleImageError(e);
     };
 
-    const handleFavorite = (id) => {
-    // handle favorite button click here
-    };
+    const favoriteHandler = (i) => {
+        props.setFavorite(i);
+    };                                    
 
     // concat the title with the year
-    const title_text = `${movie.title} (${movie.release_date.substring(0, 4)})`
+    const titleText = `${movie.title} (${movie.release_date.substring(0, 4)})`
+    const favoriteIcon = movie.isFavorited? "💙" : "🤍";
 
     return (
         <div
             className="border rounded-xl shadow bg-gray-100"
-            title={title_text}
+            title={titleText}
             key={index}>
             {/* the poster portion */}
             <div className="relative">
@@ -40,7 +45,7 @@ export default function Movie(props) {
 
                 {/* the rating button is absolute to its parent */}
                 <div className="absolute bottom-0 right-0 mb-1 mr-1 ">
-                    <div className="bg-indigo-400 text-white rounded-full w-10 h-10 flex items-center justify-center">
+                    <div className="bg-indigo-400 text-white text-2xl rounded-full w-14 h-14 mb-2 mr-2 flex items-center justify-center">
                         <span className="font-bold right-1 bottom-1">{movie.ratings.average}</span>
                     </div>
                 </div>
@@ -54,10 +59,10 @@ export default function Movie(props) {
 
                 <div className="grid grid-cols-5">
                     <button
-                        className="relative col-start-3 text-5xl bottom-2 items-center justify-center"
-                        onClick={() => handleFavorite(movie.id)}
+                        className="relative col-start-3 text-5xl mb-4 items-center justify-center"
+                        onClick={() => favoriteHandler(index)}
                         title="Add to Favorite">
-                        ♡
+                        {favoriteIcon}
                     </button>
                 </div>
             </div>
