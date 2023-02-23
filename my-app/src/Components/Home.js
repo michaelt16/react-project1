@@ -15,7 +15,7 @@ export default function Home(){
                     <Link to="/browse">Browse All Movies</Link>
                     </button>
                  </div>
-            </div>
+            </div> 
             
         </div>
         
