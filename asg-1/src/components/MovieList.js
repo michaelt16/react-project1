@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Movie from "./Movie";
 
-export default function MovieList() {
+export default function MovieList(props) {
     const [movies, setMovies] = useState([]);
     const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
 
@@ -33,7 +33,7 @@ export default function MovieList() {
     const broken_image = require("../img/broken_image.png");
 
     return (
-        <div className="w-2/4 p-4 bg-gray-200 overflow-y-scroll hide-scroll">
+        <div className={props.classList}>
             <h2 className="m-4 font-bold mb-4">Movies</h2>
             <div className="grid grid-cols-4 gap-4 grid-rows-2 mt-4 mx-4">
             {movies.map((movie, index) => 
@@ -41,6 +41,7 @@ export default function MovieList() {
                     key={movie.id}
                     index={index}
                     movie={movie}
+                    broken_image={broken_image}
                     handleImageError={handleImageError}/>)}
             </div>
         </div>

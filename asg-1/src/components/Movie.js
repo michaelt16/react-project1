@@ -11,7 +11,7 @@ export default function Movie(props) {
     // handle favorite button click here
     };
 
-    const broken_image = require("../img/broken_image.png");
+    // concat the title with the year
     const title_text = `${movie.title} (${movie.release_date.substring(0, 4)})`
 
     return (
@@ -25,7 +25,7 @@ export default function Movie(props) {
                 {movie.imageLoaded && (
                     <img
                         src={`https://www.themoviedb.org/t/p/w342${movie.poster}`}
-                        className="rounded object-fill w-full h-full cursor-pointer"
+                        className="rounded object-fill w-full h-92 cursor-pointer pb-2/3"
                         onError={imageHandler}
                         id={index}
                     />
@@ -33,13 +33,14 @@ export default function Movie(props) {
                 {/* fallback image */}
                 {!movie.imageLoaded && (
                     <img
-                        src={broken_image}
+                        src={props.broken_image}
                         className="rounded object-fill w-full h-full"
                     />
                 )}
+
                 {/* the rating button is absolute to its parent */}
                 <div className="absolute bottom-0 right-0 mb-1 mr-1 ">
-                    <div className="bg-indigo-400 text-white rounded-full w-8 h-8 flex items-center justify-center">
+                    <div className="bg-indigo-400 text-white rounded-full w-10 h-10 flex items-center justify-center">
                         <span className="font-bold right-1 bottom-1">{movie.ratings.average}</span>
                     </div>
                 </div>
@@ -47,13 +48,13 @@ export default function Movie(props) {
             
 
             <div className="relative">
-                <h3 className="font-bold px-4 py-2 overflow-hidden truncate ...">
+                <h3 className="font-bold px-4 py-2 text-xl overflow-hidden truncate ...">
                     {movie.title} ({movie.release_date.substring(0, 4)})
                 </h3>
 
                 <div className="grid grid-cols-5">
                     <button
-                        className="relative col-start-3 text-4xl bottom-2 items-center justify-center"
+                        className="relative col-start-3 text-5xl bottom-2 items-center justify-center"
                         onClick={() => handleFavorite(movie.id)}
                         title="Add to Favorite">
                         ♡
