@@ -17,10 +17,10 @@ export default function Header(props) {
                 
             </div>
             <div >
-                <button className="bg-gray-600 w-20 text-white text-[10px] font-semibold py-2 px-2 mr-10 rounded-lg hover:bg-gray-700">
-                    About Us
+                <button className="bg-gray-600 w-20 text-white font-semibold py-2 px-2 mr-10 rounded-lg hover:bg-gray-700">
+                    About
                 </button>
-                <button className="bg-gray-600 w-20 text-white text-[10px] font-semibold py-2 px-2 mr-10 rounded-lg hover:bg-gray-700"
+                <button className="bg-gray-600 w-20 text-white font-semibold py-2 px-2 mr-10 rounded-lg hover:bg-gray-700"
                     onClick={props.closeFavorite}>
                     Favorite
                 </button>
