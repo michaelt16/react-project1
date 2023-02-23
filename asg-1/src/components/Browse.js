@@ -4,7 +4,7 @@ import MovieList from "./MovieList";
 import { useEffect, useState } from "react";
 
 export default function Browse(props){
-    let movieClassList = props.favoriteVisiable? "w-2/4" : "w-4/4"
+    let movieClassList = props.favoriteVisible? "w-2/4" : "w-4/4"
     movieClassList += "p-4 bg-gray-200 overflow-y-scroll hide-scroll"
 
     return(
@@ -15,7 +15,7 @@ export default function Browse(props){
                 classList={movieClassList}
                 setMovies={props.setMovies}/>
 
-            {props.favoriteVisiable && 
+            {props.favoriteVisible && 
                 <Favorite
                     movies={props.movies}
                     closeFavorite={props.closeFavorite} />}

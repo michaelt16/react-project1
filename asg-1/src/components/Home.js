@@ -16,7 +16,7 @@ export default function Home(props){
                     </button>
                  </div>
             </div>
-            {props.favoriteVisiable && 
+            {props.favoriteVisible && 
                         <Favorite
                             movies={props.movies}
                             closeFavorite={props.closeFavorite} />}
