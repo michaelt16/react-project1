@@ -1,9 +1,10 @@
 import Header from './components/Header';
 import Home from "./components/Home";
-import Browse from "./components/Browse"
+import Browse from "./components/Browse";
+import Detail from "./components/Detail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-import css from "./App.css"
+import css from "./App.css";
 
 function App() {
     const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
@@ -45,13 +46,17 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header closeFavorite={closeFavorite}/>
+
           <Routes>
             <Route path="/" element={<Home
               closeFavorite={closeFavorite}
               favoriteVisible={favoriteVisible}
+              setMovies={setMovies}
               movies={movies}
               />} />
+
             <Route path="/search" element={<Browse />} />
+
             <Route path="/browse"
               element={<Browse
                 closeFavorite={closeFavorite}
@@ -60,6 +65,8 @@ function App() {
                 setMovies={setMovies}
                 movies={movies}
                 />} />
+
+            <Route path="/detail/:id" element={<Detail />} />
           </Routes>
       </BrowserRouter>
       </div>
