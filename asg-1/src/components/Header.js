@@ -14,9 +14,9 @@ export default function Header(props) {
                 src= {tvLogo}
                 alt="logo"
                 onClick={handleClick} />
-                
             </div>
-            <div >
+
+            <div>
                 <button className="bg-gray-600 w-20 text-white font-semibold py-2 px-2 mr-10 rounded-lg hover:bg-gray-700">
                     About
                 </button>

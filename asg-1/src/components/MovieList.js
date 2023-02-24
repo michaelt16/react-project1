@@ -34,22 +34,16 @@ export default function MovieList(props) {
         <div className={outsideDivClassList}>
             <h2 className="m-4 font-bold mb-4">Movies</h2>
             <div className={insideDivClassList}>
-                {props.movies.map((movie, index) => 
-                    <Link to={`/detail/${movie.id}`}
-                        state={{
-                            movie: movie,
-                            index: index,
-                        }}>
-                        <Movie
-                            key={movie.id}
-                            index={index}
-                            movie={movie}
-                            broken_image={broken_image}
-                            handleImageError={handleImageError}
-                            setMovies={props.setMovies}
-                            setFavorite={setFavorite}
-                            />
-                    </Link>
+                {props.movies.map((movie, index) =>
+                    <Movie
+                        key={movie.id}
+                        index={index}
+                        movie={movie}
+                        broken_image={broken_image}
+                        handleImageError={handleImageError}
+                        setMovies={props.setMovies}
+                        setFavorite={setFavorite}
+                        />
                 )}
             </div>
         </div>

@@ -15,13 +15,14 @@ function App() {
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
     }
-
-    const handleFavorite = (id) => {
-      // updatedFavorite = favorite;
-      // // toggle the favorite
-      // updatedFavorite[id] = !updatedFavorite[id];
-      // setFavorite(updatedFavorite);
-    }
+    
+    const setFavorite = (i) => {
+      const updatedMovies = [...movies];
+      updatedMovies[i].isFavorited = !updatedMovies[i].isFavorited;
+      // update local storage so that the favorite remains
+      localStorage.setItem("movies", JSON.stringify(updatedMovies))
+      setMovies(updatedMovies)
+  }
 
     useEffect(() => {
       // if local storage has nothing
@@ -33,6 +34,8 @@ function App() {
                   // create an key imageLoaded to indicate if the image is successfully loaded
                   data.forEach(e => e["imageLoaded"] = true);
                   data.forEach(e => e["isFavorited"] = false);
+                  data.forEach(e => e["isRated"] = false);
+                  data.forEach(e => e["userRating"] = null);
                   localStorage.setItem("movies", JSON.stringify(data));
                   setMovies(JSON.parse(localStorage.getItem("movies")))
               });
@@ -61,12 +64,17 @@ function App() {
               element={<Browse
                 closeFavorite={closeFavorite}
                 favoriteVisible={favoriteVisible}
-                handleFavorite={handleFavorite}
+                setFavorite={setFavorite}
                 setMovies={setMovies}
                 movies={movies}
                 />} />
 
-            <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/detail/:id" element={<Detail
+                setMovies={setMovies}
+                movies={movies}
+                setFavorite={setFavorite}
+                favoriteVisible={favoriteVisible}
+            />} />
           </Routes>
       </BrowserRouter>
       </div>
