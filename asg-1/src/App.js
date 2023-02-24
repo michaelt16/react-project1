@@ -9,10 +9,16 @@ function App() {
     const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
 
     const [movies, setMovies] = useState([]);
+    const [searchedMovies,setSearchedMovies]=useState([])
     const [favoriteVisible, setfavoriteVisible] = useState(false);
-
+    
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
+    }
+
+    const handleChange= (newValue) =>{
+      console.log(newValue)
+      setSearchedMovies(newValue)
     }
 
     const handleFavorite = (id) => {
@@ -50,8 +56,16 @@ function App() {
               closeFavorite={closeFavorite}
               favoriteVisible={favoriteVisible}
               movies={movies}
+              onClick={handleChange}
               />} />
-            <Route path="/search" element={<Browse />} />
+            <Route path="/search" element={<Browse 
+                closeFavorite={closeFavorite}
+                favoriteVisible={favoriteVisible}
+                handleFavorite={handleFavorite}
+                setMovies={setMovies}
+                movies={searchedMovies}
+                
+                />} />
             <Route path="/browse"
               element={<Browse
                 closeFavorite={closeFavorite}
