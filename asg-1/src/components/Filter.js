@@ -1,6 +1,6 @@
 export default function Filter(){
     return(
-        <div className="w-1/4 bg-gray-300 p-4">
+        <div className="row-span-1 bg-gray-300 p-4">
             <h2 className="text-lg font-bold mb-4 mt-2">Filters</h2>
             <h3 className="text-md mb-2">Title</h3>
             <input type="text" className="rounded-md w-full p-2 border border-gray-400 drop-shadow-md mb-4"/>
@@ -22,9 +22,9 @@ export default function Filter(){
             <input type="date" className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" />
             <h3 className="text-md mb-2">Rating</h3>
             <input type="range" min="0" max="10" className="w-full mb-12" />
-            <div className="flex justify-center">
-                <input type="submit" className="border p-4 px-8 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600 mr-2"></input>
-                <input type="submit" value="Clear" className="border p-4 px-10 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600 ml-2"></input>
+            <div className="flex justify-center gap-2">
+                <input type="submit" className="border p-2 px-4 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
+                <input type="submit" value="Clear" className="border p-2 px-6 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
             </div>
         </div>
     )

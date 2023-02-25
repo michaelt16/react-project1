@@ -1,9 +1,10 @@
 import Header from './components/Header';
 import Home from "./components/Home";
-import Browse from "./components/Browse"
+import Browse from "./components/Browse";
+import Detail from "./components/Detail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-import css from "./App.css"
+import css from "./App.css";
 
 function App() {
     const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
@@ -14,13 +15,23 @@ function App() {
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
     }
-
-    const handleFavorite = (id) => {
-      // updatedFavorite = favorite;
-      // // toggle the favorite
-      // updatedFavorite[id] = !updatedFavorite[id];
-      // setFavorite(updatedFavorite);
+    
+    const setFavorite = (i) => {
+      const updatedMovies = [...movies];
+      updatedMovies[i].isFavorited = !updatedMovies[i].isFavorited;
+      // update local storage so that the favorite remains
+      localStorage.setItem("movies", JSON.stringify(updatedMovies))
+      setMovies(updatedMovies)
     }
+
+    // this method replaces icon with error image
+    const handleImageError = (e) => {
+      // copy the movies
+      const updatedMovies = [...movies];
+      updatedMovies[e.target.id].imageLoaded = false;
+      localStorage.setItem("movies", JSON.stringify(updatedMovies))
+      setMovies(updatedMovies);
+    };
 
     useEffect(() => {
       // if local storage has nothing
@@ -29,9 +40,16 @@ function App() {
           fetch(URL)
               .then((resp) => resp.json())
               .then((data) => {
+                  // sorting by title
+                  data.sort((a, b) => {
+                    return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+                  });
+                  console.log(data);
                   // create an key imageLoaded to indicate if the image is successfully loaded
                   data.forEach(e => e["imageLoaded"] = true);
                   data.forEach(e => e["isFavorited"] = false);
+                  data.forEach(e => e["isRated"] = false);
+                  data.forEach(e => e["userRating"] = null);
                   localStorage.setItem("movies", JSON.stringify(data));
                   setMovies(JSON.parse(localStorage.getItem("movies")))
               });
@@ -45,21 +63,33 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header closeFavorite={closeFavorite}/>
+
           <Routes>
             <Route path="/" element={<Home
               closeFavorite={closeFavorite}
               favoriteVisible={favoriteVisible}
+              setMovies={setMovies}
               movies={movies}
               />} />
+
             <Route path="/search" element={<Browse />} />
+
             <Route path="/browse"
               element={<Browse
                 closeFavorite={closeFavorite}
                 favoriteVisible={favoriteVisible}
-                handleFavorite={handleFavorite}
+                setFavorite={setFavorite}
                 setMovies={setMovies}
                 movies={movies}
+                handleImageError={handleImageError}
                 />} />
+
+            <Route path="/detail/:id" element={<Detail
+                setMovies={setMovies}
+                movies={movies}
+                setFavorite={setFavorite}
+                favoriteVisible={favoriteVisible}
+            />} />
           </Routes>
       </BrowserRouter>
       </div>
