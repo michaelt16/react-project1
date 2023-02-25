@@ -55,7 +55,6 @@ export default function Detail(props) {
     })
     // remove the last comma
     genres = genres.slice(0, -2);
-    console.log(genres)
     
     // concat the title with the year
     const favoriteIcon = props.movies[index].isFavorited? "💙" : "🤍";
