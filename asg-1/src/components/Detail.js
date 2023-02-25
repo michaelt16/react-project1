@@ -15,7 +15,7 @@ export default function Detail(props) {
     const movie = location.state.movie;
     const index = location.state.index;
     
-    const [rating, setRating] = useState(props.movies[index].userRating == null ? 0: props.movies[index].userRating);
+    const [rating, setRating] = useState(0);
 
     const imdbLink = `https://www.imdb.com/title/${movie.imdb_id}`;
     const tmdbLink = `https://www.themoviedb.org/movie/${movie.tmdb_id}`;
@@ -131,14 +131,20 @@ export default function Detail(props) {
                                 disabled
                                 />
                         }
-                        {/* user rating */}
-                        {rating}
+                        {props.movies[index].userRating == null &&
+                            <div>{rating}</div>
+                        }
+                        {props.movies[index].userRating != null &&
+                            <div>{props.movies[index].userRating}</div>
+                        }
+                        
+
                     </div>
                     
                     {/* submit button */}
                     {!props.movies[index].isRated &&
                         <button
-                            className="mt-2 bg-grey text-white py-2 px-2 rounded-lg hover:bg-gray-700"
+                            className="font-semibold mt-2 bg-grey text-white py-2 px-2 rounded-lg hover:bg-gray-700"
                             onClick={() => handleAddRating(rating)}>
                             Submit
                         </button>
