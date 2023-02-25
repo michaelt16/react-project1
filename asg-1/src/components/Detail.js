@@ -1,11 +1,8 @@
 import React from 'react';
 import Favorite from "./Favorite";
+import Rating from "./Rating";
 import { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar as fullStar } from '@fortawesome/free-solid-svg-icons';
-import { faStarHalfAlt as halfStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
 
 export default function Detail(props) {
     // query parameter
@@ -32,22 +29,6 @@ export default function Detail(props) {
         localStorage.setItem("movies", JSON.stringify(updatedMovies))
         props.setMovies(updatedMovies)
     }
-
-    const getStarIcon = (index) => {
-        // round up the rating
-        const ratingValue = Math.round(movie.ratings.average * 2) / 2;
-        if (index <= Math.floor(ratingValue) - 1) {
-          return fullStar;
-        } else if (index === Math.floor(ratingValue) && ratingValue % 1 !== 0) {
-          return halfStar;
-        } else {
-          return emptyStar;
-        }
-    }
-
-    const stars = Array.from({length: 10}, (v, i) => i).map(index => {
-        return <FontAwesomeIcon icon={getStarIcon(index)} key={index} />;
-    });
 
     let genres = ""
     props.movies[index].details.genres.forEach(genre => {
@@ -104,9 +85,13 @@ export default function Detail(props) {
                     </button>
                 </div>
 
-                <div className="movie-rating">
+                <Rating
+                    average={movie.ratings.average}
+                    count={movie.ratings.count} />
+
+                {/* <div className="movie-rating">
                     {stars} {movie.ratings.average} (Based on {movie.ratings.count} ratings)
-                </div>
+                </div> */}
 
                 {/* external link */}
                 <div className="flex gap-2 mt-2">
