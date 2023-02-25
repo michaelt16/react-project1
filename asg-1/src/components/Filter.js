@@ -1,6 +1,6 @@
 export default function Filter(){
     return(
-        <div className="w-1/4 bg-gray-300 p-4">
+        <div className="col-span-1 bg-gray-300 p-4">
             <h2 className="text-lg font-bold mb-4 mt-2">Filters</h2>
             <h3 className="text-md mb-2">Title</h3>
             <input type="text" className="rounded-md w-full p-2 border border-gray-400 drop-shadow-md mb-4"/>

@@ -12,19 +12,11 @@ export default function MovieList(props) {
         props.setMovies(updatedMovies);
     };
 
-    const setFavorite = (i) => {
-        const updatedMovies = [...props.movies];
-        updatedMovies[i].isFavorited = !updatedMovies[i].isFavorited;
-        // update local storage so that the favorite remains
-        localStorage.setItem("movies", JSON.stringify(updatedMovies))
-        props.setMovies(updatedMovies)
-    }
-
     const close = () => <Link to="/browse"></Link>
 
     const broken_image = require("../img/broken_image.png");
 
-    let outsideDivClassList = props.favoriteVisible? "w-3/4" : "w-4/4"
+    let outsideDivClassList = props.favoriteVisible? "col-span-3" : "col-span-4"
     outsideDivClassList += " bg-gray-200 overflow-y-scroll hide-scroll"
 
     let insideDivClassList = props.favoriteVisible? "grid-cols-3" : "grid-cols-4"
@@ -42,7 +34,7 @@ export default function MovieList(props) {
                         broken_image={broken_image}
                         handleImageError={handleImageError}
                         setMovies={props.setMovies}
-                        setFavorite={setFavorite}
+                        setFavorite={props.setFavorite}
                         />
                 )}
             </div>

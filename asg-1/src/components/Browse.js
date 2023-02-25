@@ -4,9 +4,8 @@ import MovieList from "./MovieList";
 
 export default function Browse(props){
 
-
     return(
-        <div className="flex h-screen">
+        <div className="grid grid-cols-5 h-screen">
             <Filter/>
             <MovieList
                 movies={props.movies}

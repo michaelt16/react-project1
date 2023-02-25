@@ -21,7 +21,7 @@ export default function Favorite(props) {
     const broken_image = require("../img/broken_image.png");
     
     return (
-        <div className="w-1/4 bg-gray-300 p-4 overflow-y-scroll hide-scroll">
+        <div className="col-span-1 bg-gray-300 p-4 overflow-y-scroll hide-scroll">
             <div className="justify-between flex">
                 <div className="text-lg font-bold mb-4 mt-2">Favorite</div>
                 <div
@@ -77,9 +77,6 @@ export default function Favorite(props) {
                 )
             })}
 
-            <div>
-            
-            </div>
         </div>
 
         

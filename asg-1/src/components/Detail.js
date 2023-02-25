@@ -1,4 +1,5 @@
 import React from 'react';
+import Favorite from "./Favorite";
 import { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,12 +48,20 @@ export default function Detail(props) {
     const stars = Array.from({length: 10}, (v, i) => i).map(index => {
         return <FontAwesomeIcon icon={getStarIcon(index)} key={index} />;
     });
+
+    let genres = ""
+    props.movies[index].details.genres.forEach(genre => {
+        genres += genre.name + ", ";
+    })
+    // remove the last comma
+    genres = genres.slice(0, -2);
+    console.log(genres)
     
     // concat the title with the year
     const favoriteIcon = props.movies[index].isFavorited? "💙" : "🤍";
     
     return (
-        <div className="w-4/4 grid grid-cols-4 gap-4 h-screen">
+        <div className="grid grid-cols-5 h-screen">
             {/* poster portion */}
             <div className="col-span-1 p-5">
                 <img src={`https://www.themoviedb.org/t/p/w780${movie.poster}`} alt={movie.title} />
@@ -66,7 +75,7 @@ export default function Detail(props) {
                 </div>
             </div>
 
-            <div className="col-span-3 p-5 bg-gray-100">
+            <div className={`col-span-${props.favoriteVisible? 3: 4} p-5 bg-gray-100`}>
                 <div className="flex">
                     <h2 className="text-4xl font-bold mb-2">{movie.title}</h2>
                     <h2 className="text-4xl px-2">({movie.release_date.substring(0, 4)})</h2>
@@ -77,7 +86,7 @@ export default function Detail(props) {
                 </div>
 
                 <div className="movie-rating">
-                    {stars} {movie.ratings.average}
+                    {stars} {movie.ratings.average} (Based on {movie.ratings.count} ratings)
                 </div>
 
                 {/* external link */}
@@ -95,7 +104,8 @@ export default function Detail(props) {
                             width="40px" />
                     </a>
                 </div>
-
+                
+                {/* rating range slider */}
                 <div className="movie-rating-form gap-2 mt-2">
                     <label htmlFor="steps-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Your Rating
@@ -111,7 +121,6 @@ export default function Detail(props) {
                                 onChange={(event) => setRating(parseInt(event.target.value))}
                                 className="mt-2 w-48 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
                         }
-
                         {props.movies[index].userRating != null &&
                             <input id="disabled-range"
                                 type="range"
@@ -123,11 +132,11 @@ export default function Detail(props) {
                                 disabled
                                 />
                         }
-
+                        {/* user rating */}
                         {rating}
-                        
                     </div>
-
+                    
+                    {/* submit button */}
                     {!props.movies[index].isRated &&
                         <button
                             className="mt-2 bg-grey text-white py-2 px-2 rounded-lg hover:bg-gray-700"
@@ -137,16 +146,26 @@ export default function Detail(props) {
                     }
                 </div>
 
+                {/* quote */}
                 <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white py-5">
                     <svg aria-hidden="true" className="w-10 h-10 text-gray-400 dark:text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/></svg>
                     <p>"{movie.tagline}"</p>
                 </blockquote>
+
+                {/* movie details */}
                 <div>
-                        <strong>Release Date: </strong>{movie.release_date}<br/>
-                        <strong>Runtime: </strong>{movie.runtime} mins<br/>
-                        <strong>Overview: </strong>{movie.details.overview}
+                    <strong>Release Date: </strong>{movie.release_date}<br/>
+                    <strong>Genre: </strong>{genres}<br/>
+                    <strong>Runtime: </strong>{movie.runtime} mins<br/>
+                    <strong>Revenue: </strong>${movie.revenue.toLocaleString()} <br/>
+                    <strong>Overview: </strong>{movie.details.overview}
                 </div>
             </div>
+            {props.favoriteVisible && 
+                <Favorite
+                    movies={props.movies}
+                    setMovies={props.setMovies}
+                    closeFavorite={props.closeFavorite}/>}
         </div>
       );
     

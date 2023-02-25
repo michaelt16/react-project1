@@ -3,8 +3,8 @@ import Favorite from "./Favorite";
 
 export default function Home(props){
     return(
-        <div className="w-4/4 bg-cover bg-center flex" style={{ backgroundImage: "url(https://via.placeholder.com/1920x1080)", height: "100vh" }}>
-            <div className="mx-auto py-60">
+        <div className="grid grid-cols-5 bg-cover bg-center flex" style={{ backgroundImage: "url(https://via.placeholder.com/1920x1080)", height: "100vh" }}>
+            <div className={`mx-auto py-60 col-span-${props.favoriteVisible? 4: 5}`}>
                  <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
                  <input className="my-4 w-full p-4 rounded-lg " type="text" placeholder="Search Movies..." />
                     <button className="w-40 p-4 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 mx-4">
