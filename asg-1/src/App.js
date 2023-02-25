@@ -40,6 +40,11 @@ function App() {
           fetch(URL)
               .then((resp) => resp.json())
               .then((data) => {
+                  // sorting by title
+                  data.sort((a, b) => {
+                    return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+                  });
+                  console.log(data);
                   // create an key imageLoaded to indicate if the image is successfully loaded
                   data.forEach(e => e["imageLoaded"] = true);
                   data.forEach(e => e["isFavorited"] = false);
