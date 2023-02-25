@@ -58,12 +58,32 @@ export default function Detail(props) {
     
     // concat the title with the year
     const favoriteIcon = props.movies[index].isFavorited? "💙" : "🤍";
+
+    const broken_image = require("../img/broken_image.png");
     
     return (
         <div className="grid grid-cols-5 h-screen">
             {/* poster portion */}
             <div className="col-span-1 p-5">
-                <img src={`https://www.themoviedb.org/t/p/w780${movie.poster}`} alt={movie.title} />
+                {/* poster image */}
+                {movie.imageLoaded && (
+                    <img
+                        src={`https://www.themoviedb.org/t/p/w780${movie.poster}`}
+                        className="rounded object-cover w-full hover:scale-150"
+                        id={movie.id}
+                        alt={movie.title}
+                    />
+                )}
+                {/* fallback image */}
+                {!movie.imageLoaded && (
+                    <img
+                        src={broken_image}
+                        className="rounded object-cover w-full cursor-pointer"
+                        id={movie.id}
+                        alt={movie.title}
+                        title={movie.title}
+                    />
+                )}
                 {/* button portion */}
                 <div className="flex py-5 justify-center">
                     <Link to="/browse">

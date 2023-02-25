@@ -23,8 +23,8 @@ export default function Filter(){
             <h3 className="text-md mb-2">Rating</h3>
             <input type="range" min="0" max="10" className="w-full mb-12" />
             <div className="flex justify-center gap-2">
-                <input type="submit" className="border p-3 px-6 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
-                <input type="submit" value="Clear" className="border p-3 px-8 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
+                <input type="submit" className="border p-2 px-4 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
+                <input type="submit" value="Clear" className="border p-2 px-6 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
             </div>
         </div>
     )

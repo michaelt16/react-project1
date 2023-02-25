@@ -22,7 +22,16 @@ function App() {
       // update local storage so that the favorite remains
       localStorage.setItem("movies", JSON.stringify(updatedMovies))
       setMovies(updatedMovies)
-  }
+    }
+
+    // this method replaces icon with error image
+    const handleImageError = (e) => {
+      // copy the movies
+      const updatedMovies = [...movies];
+      updatedMovies[e.target.id].imageLoaded = false;
+      localStorage.setItem("movies", JSON.stringify(updatedMovies))
+      setMovies(updatedMovies);
+    };
 
     useEffect(() => {
       // if local storage has nothing
@@ -67,6 +76,7 @@ function App() {
                 setFavorite={setFavorite}
                 setMovies={setMovies}
                 movies={movies}
+                handleImageError={handleImageError}
                 />} />
 
             <Route path="/detail/:id" element={<Detail

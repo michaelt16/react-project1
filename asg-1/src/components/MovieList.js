@@ -3,15 +3,6 @@ import { Link } from "react-router-dom";
 
 export default function MovieList(props) {
 
-    // this method replaces icon with error image
-    const handleImageError = (e) => {
-        // copy the movies
-        const updatedMovies = [...props.movies];
-        updatedMovies[e.target.id].imageLoaded = false;
-        localStorage.setItem("movies", JSON.stringify(updatedMovies))
-        props.setMovies(updatedMovies);
-    };
-
     const close = () => <Link to="/browse"></Link>
 
     const broken_image = require("../img/broken_image.png");
@@ -32,7 +23,7 @@ export default function MovieList(props) {
                         index={index}
                         movie={movie}
                         broken_image={broken_image}
-                        handleImageError={handleImageError}
+                        handleImageError={props.handleImageError}
                         setMovies={props.setMovies}
                         setFavorite={props.setFavorite}
                         />

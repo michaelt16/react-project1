@@ -12,6 +12,7 @@ export default function Browse(props){
                 setMovies={props.setMovies}
                 favoriteVisible={props.favoriteVisible}
                 setFavorite={props.setFavorite}
+                handleImageError={props.handleImageError}
                 />
 
             {props.favoriteVisible && 

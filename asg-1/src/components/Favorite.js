@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 export default function Favorite(props) {
     // filter the favorite movies
     const filteredMovies = props.movies.filter(e => e.isFavorited);
-    const imageHandler = (e) => {
-        
-    };
 
     const removeFavorite = (id) => {
         const updatedMovies = props.movies.map(movie => {
@@ -38,7 +35,6 @@ export default function Favorite(props) {
                                         <img
                                             src={`https://www.themoviedb.org/t/p/w154${movie.poster}`}
                                             className="rounded object-cover w-full cursor-pointer"
-                                            onError={imageHandler}
                                             id={movie.id}
                                             alt={movie.title}
                                             title={movie.title}
