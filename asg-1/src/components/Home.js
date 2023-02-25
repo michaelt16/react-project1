@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Browse from "./Browse"
 import Favorite from "./Favorite";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Home(props){
    const [searchInput,setSearchInput]= useState ("")

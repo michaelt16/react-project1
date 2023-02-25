@@ -1,7 +1,9 @@
 import { useState } from "react";                                                                                                                               
 
 export default function Movie(props) {
-    const movie = props.movie;
+   let movie = props.movie;
+   
+    
     const index = props.index;
 
     const [refresh, setRefresh] = useState(false);
@@ -20,10 +22,13 @@ export default function Movie(props) {
     const favoriteIcon = movie.isFavorited? "💙" : "🤍";
 
     return (
+    
         <div
             className="border rounded-xl shadow bg-gray-100"
             title={titleText}
             key={index}>
+                 
+    
             {/* the poster portion */}
             <div className="relative">
                 {/* poster image */}

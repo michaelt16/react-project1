@@ -5,6 +5,9 @@ export default function Header(props) {
     const navigate = useNavigate();
     function handleClick(){
         navigate("/")
+        const getLocal = JSON.parse(localStorage.getItem("movies"))
+        console.log("retrieved",getLocal)
+        props.setMovies(getLocal)
     }
     return (
         <nav className="flex items-center justify-between bg-grey">

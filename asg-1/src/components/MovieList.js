@@ -24,9 +24,12 @@ export default function MovieList(props) {
 
     return (
         <div className={props.classList}>
+             
             <h2 className="m-4 font-bold mb-4">Movies</h2>
             <div className="grid grid-cols-4 gap-4 grid-rows-2 mt-4 mx-4">
-            {props.movies.map((movie, index) => 
+                
+            {props.movies.length>0?
+            props.movies.map((movie, index) => 
                 <Movie
                     key={movie.id}
                     index={index}
@@ -34,8 +37,10 @@ export default function MovieList(props) {
                     broken_image={broken_image}
                     handleImageError={handleImageError}
                     setMovies={props.setMovies}
-                    setFavorite={setFavorite}
-                    />)}
+                    setFavorite={setFavorite} 
+                    updatedMovies = {props.updatedMovies}
+                    />):
+                    <p className="mx-20 w-full mt-8 col-span-2">no results found.</p>}
             </div>
         </div>
     );

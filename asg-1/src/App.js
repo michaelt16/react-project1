@@ -6,20 +6,24 @@ import { useState, useEffect } from "react";
 import css from "./App.css"
 
 function App() {
-    const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
+    const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=50";
 
     const [movies, setMovies] = useState([]);
     const [searchedMovies,setSearchedMovies]=useState([])
     const [favoriteVisible, setfavoriteVisible] = useState(false);
-    
+    const [genre,setGenre]=([])
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
     }
 
-    const handleChange= (newValue) =>{
-      console.log(newValue)
-      setSearchedMovies(newValue)
+    const handleChange= (newVal) =>{
+      //console.log("retrieveed from storage")
+      console.log("new search",newVal)
+      setMovies(newVal)
+     // setSearchedMovies (newVal)
     }
+   
+    
 
     const handleFavorite = (id) => {
       // updatedFavorite = favorite;
@@ -43,14 +47,30 @@ function App() {
               });
       } else {
           setMovies(JSON.parse(localStorage.getItem("movies")))
+          
       }
     // dependency array to prevent useEffect gets called every render
     }, []);
 
+    const genreList =()=>{
+        const genre=[];
+        movies.map((movie)=>{
+          if (movie.details.genres != null){
+               movie.details.genres.map((data)=>{        
+                    const exists = genre.includes(data.name) 
+                        if(!exists){
+                            genre.push(data.name)
+                        }
+                    })
+                  }      
+                })
+              return genre;
+      } 
     return (
-      <div className="App">
+      <div className="App"> 
         <BrowserRouter>
-          <Header closeFavorite={closeFavorite}/>
+          <Header closeFavorite={closeFavorite}
+          setMovies = {setMovies}/>
           <Routes>
             <Route path="/" element={<Home
               closeFavorite={closeFavorite}
@@ -63,7 +83,8 @@ function App() {
                 favoriteVisible={favoriteVisible}
                 handleFavorite={handleFavorite}
                 setMovies={setMovies}
-                movies={searchedMovies}
+                movies={movies}
+                genreList = {genreList()}
                 
                 />} />
             <Route path="/browse"
@@ -73,6 +94,7 @@ function App() {
                 handleFavorite={handleFavorite}
                 setMovies={setMovies}
                 movies={movies}
+                genreList = {genreList()}
                 />} />
           </Routes>
       </BrowserRouter>
