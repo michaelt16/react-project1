@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import Favorite from "./Favorite";
 
 export default function Home(props){
+
     return(
         <div className="grid grid-cols-5 bg-cover bg-center" style={{ backgroundImage: "url(https://via.placeholder.com/1920x1080)", height: "100vh" }}>
-            <div className={`mx-auto py-60 col-span-${props.favoriteVisible? 4: "full"}`}>
+            <div className={"py-60 col-span-4"}>
                  <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
                     <input className="my-4 w-full p-4 rounded-lg " type="text" placeholder="Search Movies..." />
                     <button className="w-40 p-4 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 mx-4">
@@ -15,6 +16,7 @@ export default function Home(props){
                     </button>
                  </div>
             </div>
+            
             {props.favoriteVisible && 
                         <Favorite
                             movies={props.movies}
