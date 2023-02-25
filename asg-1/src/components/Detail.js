@@ -1,6 +1,7 @@
 import React from 'react';
 import Favorite from "./Favorite";
 import Rating from "./Rating";
+import UserRating from "./UserRating";
 import { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from 'react-router-dom';
 
@@ -17,9 +18,9 @@ export default function Detail(props) {
     const imdbLink = `https://www.imdb.com/title/${movie.imdb_id}`;
     const tmdbLink = `https://www.themoviedb.org/movie/${movie.tmdb_id}`;
 
-    const handleRatingChange = (event) => {
-        setRating(parseInt(event.target.value));
-    }
+    // const handleRatingChange = (event) => {
+    //     setRating(parseInt(event.target.value));
+    // }
 
     const handleAddRating = (rating) => {
         const updatedMovies = JSON.parse(localStorage.getItem("movies"));
@@ -89,10 +90,6 @@ export default function Detail(props) {
                     average={movie.ratings.average}
                     count={movie.ratings.count} />
 
-                {/* <div className="movie-rating">
-                    {stars} {movie.ratings.average} (Based on {movie.ratings.count} ratings)
-                </div> */}
-
                 {/* external link */}
                 <div className="flex gap-2 mt-2">
                     <a href={tmdbLink} target="_blank" rel="noreferrer">
@@ -110,51 +107,13 @@ export default function Detail(props) {
                 </div>
                 
                 {/* rating range slider */}
-                <div className="movie-rating-form gap-2 mt-2">
-                    <label htmlFor="steps-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Your Rating
-                    </label>
-                    <div className="flex gap-2">
-                        {props.movies[index].userRating == null &&
-                            <input id="steps-range"
-                                type="range"
-                                min="0"
-                                max="10"
-                                value={rating}
-                                step="1"
-                                onChange={(event) => setRating(parseInt(event.target.value))}
-                                className="mt-2 w-48 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
-                        }
-                        {props.movies[index].userRating != null &&
-                            <input id="disabled-range"
-                                type="range"
-                                min="0"
-                                max="10"
-                                value={props.movies[index].userRating}
-                                step="1"
-                                className="mt-2 w-48 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                                disabled
-                                />
-                        }
-                        {props.movies[index].userRating == null &&
-                            <div>{rating}</div>
-                        }
-                        {props.movies[index].userRating != null &&
-                            <div>{props.movies[index].userRating}</div>
-                        }
-                        
-
-                    </div>
-                    
-                    {/* submit button */}
-                    {!props.movies[index].isRated &&
-                        <button
-                            className="font-semibold mt-2 bg-grey text-white py-2 px-2 rounded-lg hover:bg-gray-700"
-                            onClick={() => handleAddRating(rating)}>
-                            Submit
-                        </button>
-                    }
-                </div>
+                <UserRating 
+                    movies={props.movies}
+                    index={index}
+                    setRating={setRating}
+                    handleAddRating={handleAddRating}
+                    rating={rating}
+                />
 
                 {/* quote */}
                 <blockquote className="text-xl italic font-semibold text-gray-900 dark:text-white py-5">
