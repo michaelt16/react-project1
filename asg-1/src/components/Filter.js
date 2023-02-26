@@ -2,9 +2,16 @@ import {useState} from "react"
 export default function Filter(props){
 
     const [range, setRange]= useState(10)
-    
     //const [titleFilter, setTitleFilter]= useState("")
     const [filteredMovies, setFilteredMovies] =useState([])
+    const disableOtherInput =(e)=>{
+        console.log("clicked me!")
+        console.log(e.currentTarget.parentElement)
+    }
+    const handleRange=(e)=>{
+        setRange(e.target.value)
+        disableOtherInput(e)
+    }
     const handleSearch =(e)=>{
         let text = e.target.value
         console.log("TEXT FILTER:",text)
@@ -63,15 +70,14 @@ export default function Filter(props){
             <form onSubmit={handleSubmit}>
             <h2 className="text-lg font-bold mb-4 mt-2">Filters</h2>
             <h3 className="text-md mb-2">Title</h3>
-            <input type="text" className="rounded-md w-full p-2 border border-gray-400 drop-shadow-md mb-4" onChange={handleSearch}/>
+            <input type="text" className="rounded-md w-full p-2 border border-gray-400 drop-shadow-md mb-4" onChange={handleSearch} onClick ={disableOtherInput}/>
             <h3 className="text-md mb-2">Genre</h3>
-            <select className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" onChange={handleGenre}>
+            <select className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" onChange={handleGenre} onClick ={disableOtherInput}>
                 {/* later were gonna loop through the genre that randy has */}
             
                {props.genreList.map((genre)=>{
                    return <option>{genre}</option>
                })}
-
             </select>
             <h3 className="text-mb mt-4 mb-2">Release Date</h3>
             <select className="bg-white border border-gray-400 rounded p-2 mb-4 w-full">
@@ -82,7 +88,7 @@ export default function Filter(props){
             <input type="date" className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" />
             <h3 className="text-md mb-2">Rating ({range})</h3>
            
-            <input type="range" min="0" max="10" className="w-full mb-12" onChange={(e)=>setRange(e.target.value)} />
+            <input type="range" min="0" max="10" className="w-full mb-12" onChange={handleRange}onClick ={disableOtherInput} />
             
             <div className="flex justify-center">
                 <input type="submit" value ="Submit" name="submit" className="border p-4 px-8 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600 mr-2" ></input>

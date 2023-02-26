@@ -23,7 +23,7 @@ export default function MovieList(props) {
     const broken_image = require("../img/broken_image.png");
 
     return (
-        <div className={props.classList}>
+        <div className={props.classList}> 
              
             <h2 className="m-4 font-bold mb-4">Movies</h2>
             <div className="grid grid-cols-4 gap-4 grid-rows-2 mt-4 mx-4">

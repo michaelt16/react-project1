@@ -18,7 +18,7 @@ function App() {
 
     const handleChange= (newVal) =>{
       //console.log("retrieveed from storage")
-      console.log("new search",newVal)
+      console.log("new search", newVal)
       setMovies(newVal)
      // setSearchedMovies (newVal)
     }
