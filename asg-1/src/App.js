@@ -11,11 +11,17 @@ function App() {
 
     const [movies, setMovies] = useState([]);
     const [favoriteVisible, setfavoriteVisible] = useState(false);
-
+    const [searchedMovies,setSearchedMovies]=useState([])
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
     }
     
+    const handleChange= (newVal) =>{
+      //console.log("retrieveed from storage")
+      console.log("new search", newVal)
+      setMovies(newVal)
+     // setSearchedMovies (newVal)
+    }
     const setFavorite = (i) => {
       const updatedMovies = [...movies];
       updatedMovies[i].isFavorited = !updatedMovies[i].isFavorited;
@@ -58,11 +64,25 @@ function App() {
       }
     // dependency array to prevent useEffect gets called every render
     }, []);
-
+    const genreList =()=>{
+        const genre=[];
+        movies.map((movie)=>{
+          if (movie.details.genres != null){
+               movie.details.genres.map((data)=>{        
+                    const exists = genre.includes(data.name) 
+                        if(!exists){
+                            genre.push(data.name)
+                        }
+                    })
+                  }      
+                })
+              return genre;
+      } 
     return (
       <div className="App">
         <BrowserRouter>
-          <Header closeFavorite={closeFavorite}/>
+          <Header closeFavorite={closeFavorite} 
+          setMovies = {setMovies}/>
 
           <Routes>
             <Route path="/" element={<Home
@@ -70,9 +90,16 @@ function App() {
               favoriteVisible={favoriteVisible}
               setMovies={setMovies}
               movies={movies}
+              onClick={handleChange}
               />} />
 
-            <Route path="/search" element={<Browse />} />
+            <Route path="/search" element={<Browse 
+              closeFavorite={closeFavorite}
+                favoriteVisible={favoriteVisible}
+                setFavorite={setFavorite}
+                setMovies={setMovies}
+                movies={movies}
+                genreList = {genreList()}/>} />
 
             <Route path="/browse"
               element={<Browse
@@ -82,6 +109,7 @@ function App() {
                 setMovies={setMovies}
                 movies={movies}
                 handleImageError={handleImageError}
+                genreList = {genreList()}
                 />} />
 
             <Route path="/detail/:id" element={<Detail
