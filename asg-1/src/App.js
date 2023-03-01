@@ -75,20 +75,23 @@ function App() {
       }
     // dependency array to prevent useEffect gets called every render
     }, []);
+
     const genreList =()=>{
-        const genre=[];
-        copyMovies.map((movie)=>{
-          if (movie.details.genres != null){
-               movie.details.genres.map((data)=>{        
-                    const exists = genre.includes(data.name) 
-                        if(!exists){
-                            genre.push(data.name)
-                        }
-                    })
-                  }      
-                })
-              return genre;
-      } 
+      const genre=[];
+      genre.push("")
+      copyMovies.map((movie)=>{
+        if (movie.details.genres != null){
+          movie.details.genres.map((data)=>{        
+            const exists = genre.includes(data.name) 
+            if(!exists){
+              genre.push(data.name)
+            }
+          })
+        }      
+      })
+      return genre;
+    } 
+
     return (
       <div className="App">
         <BrowserRouter>

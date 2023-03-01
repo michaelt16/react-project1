@@ -1,165 +1,206 @@
 import {useState} from "react"
 export default function Filter(props){
-    const [range, setRange]= useState(10)
+    const [range, setRange] = useState("")
     const [titleValue, setTitleValue] = useState("")
     const [dateValue, setDateValue] = useState("")
+    const [genre, setGenre] = useState("")
 
     const [filteredMovies, setFilteredMovies] = useState([])
-    const [beforeAfterDatetoggle, setBeforeAfterDateToggle] = useState("Before")
-    const [beforeAfterRatingtoggle, setBeforeAfterRatingToggle] = useState("Before")
+    const [beforeAfterDateToggle, setBeforeAfterDateToggle] = useState("Before")
+    const [beforeAfterRatingToggle, setBeforeAfterRatingToggle] = useState("Before")
    
-    const disableOtherInput =(e)=>{
-        const currentTarget = e.target.name
-        const inputs = e.target.form.elements
+    const disableOtherInput = (e) => {
+        const currentTarget = e.target.name;
+        // get an collection of all inputs, textarea, button, etc
+        // const inputs = e.target.form.elements;
+        // store the value of the target in a temp variable
+        const temp = e.target.value;
 
-        for (let i = 0; i < inputs.length; i++){
-            let input = inputs[i]
-            if (input.name !== currentTarget && input.name !=="submit" && input.name !=="clear"){
-                input.disabled=true;
-                setTitleValue("")
-                setDateValue("")
-                
-                if(currentTarget === "dateOption" || currentTarget === "date"){
-                    inputs[2].disabled=false;
-                    inputs[3].disabled=false;  
-                }else if(currentTarget === "rangeOption" || currentTarget === "range"){
-                    inputs[4].disabled=false;
-                    inputs[5].disabled=false;
-                }
-            }else{
-                input.disabled=false;
-            }
+        // disable everything
+        setTitleValue("")
+        setDateValue("")
+        setGenre("")
+        setRange("")
+
+        // put the value back to where it belongs
+        if (currentTarget == "search") {
+            setTitleValue(temp)
+        } else if (currentTarget == "genre") {
+            setGenre(temp)
+        } else if (currentTarget == "dateOption") {
+            setDateValue(temp)
+        } else if (currentTarget == "range") {
+            setRange(temp)
         }
-        
     }
-    const dateBeforeAfter=(e)=>{
+
+    const dateBeforeAfter = (e) => {
         setBeforeAfterDateToggle(e.target.value)
     }
-    const ratingBeforeAfter=(e)=>{
+
+    const ratingBeforeAfter = (e) => {
         setBeforeAfterRatingToggle(e.target.value)
     }
 
-    const handleRange = (e) => {
-        setRange(e.target.value)
-        let rangeSorted;
-        disableOtherInput(e)
-        if(beforeAfterRatingtoggle === "Before"){
-            rangeSorted = props.copyMovies.filter((data)=>{
-            return data.ratings.average <= e.target.value
-        })
-        } else {
-            rangeSorted = props.copyMovies.filter((data)=>{
-                return data.ratings.average >= e.target.value
-            })
-        }
-        console.log("sorted Range",rangeSorted)
-        setFilteredMovies(rangeSorted)
+    const handleSearch = (e) => {
+        setTitleValue(e.target.value)
+    }
+    
+    const handleGenre = (e) => {
+        setGenre(e.target.value)
     }
 
     const handleDate = (e) => {
-        console.log(e.target.value)
         setDateValue(e.target.value)
-        let dateSorted;
-        if(beforeAfterDatetoggle === "Before"){
-             dateSorted = props.copyMovies.filter((data)=>{
-            return data.release_date.substring(0,4) <= e.target.value
-        })
-        }else{
-              dateSorted = props.copyMovies.filter((data)=>{
-            return data.release_date.substring(0,4) >= e.target.value
-
-        })}
-       
-        console.log(dateSorted)
-        setFilteredMovies(dateSorted)
     }
 
-    const handleSearch =(e)=>{
-        // change the state when the search is changed
-        let text = e.target.value
-        setTitleValue(text)
-
-        console.log("TEXT FILTER:", titleValue)
-
-        // change the search result with every key stroke
-        let searched = props.copyMovies.filter((data)=>{
-            return data.title.toLowerCase().includes(text.toLowerCase())
-        })
-        // change the filterMoives state
-        setFilteredMovies(searched)
-    }
-
-    const handleGenre = (e)=>{
-        console.log(e.target.value)
-        const searchedVal = e.target.value.toLowerCase()
-        let filteredMovies = props.copyMovies.filter((movie)=>{
-            //so what this does is if its null it will evaluate to an empty array
-            const genres = movie.details.genres || []
-            for (let i = 0; i < genres.length;i++){
-                if (genres[i].name.toLowerCase()===searchedVal)    {
-                    return true;
-                }
-            }
-            return false;
-            //can also use this neat function 
-           // return genres.some((genre)=>genre.name.toLowerCase()===searchedVal)
-        })
-        console.log(filteredMovies)
-        setFilteredMovies(filteredMovies)
+    const handleRange = (e) => {
+        setRange(e.target.value);
     }
 
     const handleSubmit = (e) =>{
-        // reset all the movies first
-        props.setMovies(props.copyMovies);
         e.preventDefault();
-        console.log("filter", filteredMovies);
-        console.log("OG", props.movies);
-        props.setMovies(filteredMovies);
-        console.log("modified", props.movies);
+
+        let results;
+        // handle title search
+        if (titleValue != "") {
+            // change the search result with every key stroke
+            results = props.copyMovies.filter((data)=>{
+                return data.title.toLowerCase().includes(titleValue.toLowerCase())
+            })
+        }
+        // handle title search
+        if (titleValue != "") {
+            results = props.copyMovies.filter((movie)=>{
+                return movie.title.toLowerCase().includes(titleValue.toLowerCase())
+            })
+        }
+        // handle genre
+        if (genre != "") {
+            results = props.copyMovies.filter((movie)=>{
+                return movie.details.genres.some((g) => g.name === genre);
+            })
+        }
+        // handle date
+        if (dateValue != "") {
+            if (beforeAfterDateToggle === "Before") {
+                results = props.copyMovies.filter((data)=>{
+                    return data.release_date.substring(0,4) <= dateValue
+                })
+            } else {
+                results = props.copyMovies.filter((data)=>{
+                    return data.release_date.substring(0,4) >= dateValue
+                })
+            }
+        }
+        if (range != "") {
+            if(beforeAfterRatingToggle === "Before"){
+                results = props.copyMovies.filter((data) => {
+                    return data.ratings.average <= range
+                })
+            } else {
+                results = props.copyMovies.filter((data)=>{
+                    return data.ratings.average >= range
+                })
+            }
+        }
+        if (results == undefined) {
+            props.setMovies(props.copyMovies);
+        } else {
+            props.setMovies(results);
+        }
     }
 
     const showAll = (e) =>{
-        console.log("CLICKED");
         props.setMovies(props.copyMovies);
+        handleClear();
     }
 
-    const handleClear= (e) => {
-        props.setMovies(props.copyMovies);
-        setRange(5);
+    const handleClear= () => {
         setBeforeAfterRatingToggle("Before");
         setBeforeAfterDateToggle("Before");
         setTitleValue("");
+        setGenre("");
         setDateValue("");
+        setRange("");
     }
 
     return(
         <div className="row-span-1 bg-gray-300 p-4">
             <form onSubmit={handleSubmit}>
                 <h2 className="text-lg font-bold mb-4 mt-2">Filters</h2>
+                {/* title search field */}
                 <h3 className="text-md mb-2">Title</h3>
-                <input type="text" name="search" value={titleValue} className="rounded-md w-full p-2 border border-gray-400 drop-shadow-md mb-4" onChange={handleSearch} onClick={disableOtherInput}/>
+                <input type="text"
+                    name="search"
+                    value={titleValue}
+                    className="rounded-md w-full p-2 border border-gray-400 drop-shadow-md mb-4"
+                    onChange={handleSearch}
+                    onClick={disableOtherInput}/>
+                    
+                {/* genre field */}
                 <h3 className="text-md mb-2">Genre</h3>
-                <select className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" name="genre" onChange={handleGenre} onClick ={disableOtherInput}>
+                <select
+                    value={genre}
+                    className="bg-white border border-gray-400 rounded p-2 mb-4 w-full"
+                    name="genre"
+                    onChange={handleGenre}
+                    onClick ={disableOtherInput}>
                         {props.genreList.map((genre)=>{
                         return <option>{genre}</option>
                     })}
                 </select>
+
+                {/* date field */}
                 <h3 className="text-mb mt-4 mb-2">Release Date</h3>
-                <select name ="dateOption" className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" onClick ={disableOtherInput} onChange={dateBeforeAfter}>
+                <select
+                    name="dateOption"
+                    className="bg-white border border-gray-400 rounded p-2 mb-4 w-full"
+                    onClick ={disableOtherInput}
+                    onChange={dateBeforeAfter}>
                     <option>Before</option>
                     <option>After</option>
                 </select>
-                <input type="number" value={dateValue} min="1900" max="2099" step="1" name="date" maxLength = "4" className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" onChange = {handleDate}onClick ={disableOtherInput}/>
-                <h3 className="text-md mb-2">Rating({range})</h3>
-                    <select name ="rangeOption" className="bg-white border border-gray-400 rounded p-2 mb-4 w-full" onClick ={disableOtherInput} onChange={ratingBeforeAfter}>
-                    <option>Before</option>
-                    <option>After</option>
-                </select>
-                <input name="range" type="range" min="0" max="10" className="w-full mb-12" onChange={handleRange} onClick ={disableOtherInput}/>
+                <input
+                    type="number"
+                    value={dateValue}
+                    min="1900"
+                    max="2099"
+                    step="1"
+                    name="date"
+                    maxLength="4"
+                    className="bg-white border border-gray-400 rounded p-2 mb-4 w-full"
+                    onChange={handleDate}
+                    onClick={disableOtherInput}/>
+                
+                {/* rating field */}
+                <h3 className="text-md mb-2">Rating</h3>
+                    <select
+                        name="rangeOption"
+                        className="bg-white border border-gray-400 rounded p-2 mb-4 w-full"
+                        onClick={disableOtherInput}
+                        onChange={ratingBeforeAfter}>
+                        <option>Before</option>
+                        <option>After</option>
+                    </select>
+                <div className="flex gap-2">
+                    <input
+                        name="range"
+                        type="range"
+                        min="0"
+                        max="10"
+                        className="w-full mb-12 mt-1"
+                        onChange={handleRange}
+                        value={range}
+                        onClick={disableOtherInput} />
+                    {range}
+                </div>
+
+                {/* buttons */}
                 <div className="flex justify-center gap-2">
                     <input type="submit" value ="Submit" name="submit" className="border p-2 px-4 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
                     <input type="reset" value="Clear" name="clear" onClick={handleClear} className="border p-2 px-6 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
-                    <input type="button" name="showAll" value="Reset" onClick={showAll} className="border p-2 px-6 rounded-md bg-red-700 text-white cursor-pointer hover:bg-red-900"></input>
+                    <input type="reset" value="Reset" name="reset" onClick={showAll} className="border p-2 px-6 rounded-md bg-red-700 text-white cursor-pointer hover:bg-red-900"></input>
                 </div>
             </form>
         </div>
