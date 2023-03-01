@@ -3,7 +3,7 @@ import Home from "./components/Home";
 import Browse from "./components/Browse";
 import Detail from "./components/Detail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import css from "./App.css";
 
 function App() {
@@ -13,17 +13,13 @@ function App() {
     // we can implement favorite on state
     // but we want favorite remains even after refresh
     const [copyMovies, setCopyMovies] = useState([])
-    const [searchedMovies,setSearchedMovies] = useState([])
+    const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
+
+
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
     }
     
-    const handleChange= (newVal) =>{
-      //console.log("retrieveed from storage")
-      console.log("new search", newVal)
-      setMovies(newVal)
-     // setSearchedMovies (newVal)
-    }
     const setFavorite = (id) => {
       const updatedMovies = [...copyMovies];
       // switch isFavorited boolean
@@ -42,11 +38,9 @@ function App() {
       let updatedMovies = copyMovies.map(m => {
         if (m.id == e.target.id) {
           m.imageLoaded = false;
-          console.log("CONDIT" + m.id);
         }
         return m;
       });
-      console.log(e.target.id);
       localStorage.setItem("movies", JSON.stringify(updatedMovies));
       setCopyMovies(updatedMovies);
     };
@@ -65,7 +59,42 @@ function App() {
         }      
       })
       return genre;
-    } 
+    }
+
+
+    
+    useEffect(() => {
+        // if local storage has nothing
+        if (localStorage.getItem("movies") == null) {
+        // fetch and put data into local storage
+            fetch(URL)
+                .then((resp) => resp.json())
+                .then((data) => {
+                    // sorting by title
+                    data.sort((a, b) => {
+                      return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+                    });
+                    // create an key imageLoaded to indicate if the image is successfully loaded
+                    data.forEach(e => e["imageLoaded"] = true);
+                    data.forEach(e => e["isFavorited"] = false);
+                    data.forEach(e => e["isRated"] = false);
+                    data.forEach(e => e["userRating"] = null);
+                    localStorage.setItem("movies", JSON.stringify(data));
+                    setMovies(JSON.parse(localStorage.getItem("movies")))
+                    // create a backup
+                    setCopyMovies(JSON.parse(localStorage.getItem("movies")))
+                });       
+        } else {
+            setMovies(JSON.parse(localStorage.getItem("movies")))
+            setCopyMovies(JSON.parse(localStorage.getItem("movies")))
+        }
+
+        return () => {
+            // component will unmount
+            
+        }
+      // dependency array to prevent useEffect gets called every render
+      }, []);
 
     return (
       <div className="App">
@@ -81,8 +110,7 @@ function App() {
               setMovies={setMovies}
               movies={movies}
               copyMovies={copyMovies}
-              setCopyMovies={setCopyMovies}
-              onClick={handleChange} />}
+              setCopyMovies={setCopyMovies} />}
             />
 
             <Route path="/search" element={<Browse 
@@ -93,6 +121,7 @@ function App() {
                 movies={movies}
                 copyMovies={copyMovies}
                 setCopyMovies={setCopyMovies}
+                handleImageError={handleImageError}
                 genreList = {genreList()} />}
             />
 
