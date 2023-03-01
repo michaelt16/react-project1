@@ -11,7 +11,6 @@ export default function Favorite(props) {
             }
             return movie;
         });
-        console.log("FAVORITED REMOVED",updatedMovies)
         // update local storage so that the favorite remains
         localStorage.setItem("movies", JSON.stringify(updatedMovies))
         props.setMovies(updatedMovies)

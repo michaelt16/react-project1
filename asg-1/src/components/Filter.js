@@ -133,7 +133,7 @@ export default function Filter(props){
                     onChange={handleGenre}
                     onClick ={disableOtherInput}>
                         {props.genreList.map((genre)=>{
-                        return <option>{genre}</option>
+                        return <option key={genre}>{genre}</option>
                     })}
                 </select>
 
@@ -144,8 +144,8 @@ export default function Filter(props){
                     className="bg-white border border-gray-400 rounded p-2 mb-4 w-full"
                     onClick ={disableOtherInput}
                     onChange={dateBeforeAfter}>
-                    <option>Before</option>
-                    <option>After</option>
+                    <option key="before">Before</option>
+                    <option key="after">After</option>
                 </select>
                 <input
                     type="number"
@@ -166,8 +166,8 @@ export default function Filter(props){
                         className="bg-white border border-gray-400 rounded p-2 mb-4 w-full"
                         onClick={disableOtherInput}
                         onChange={ratingBeforeAfter}>
-                        <option>Before</option>
-                        <option>After</option>
+                        <option key="before">Before</option>
+                        <option key="after">After</option>
                     </select>
                 <div className="flex gap-2">
                     <input

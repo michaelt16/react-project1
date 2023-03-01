@@ -11,7 +11,7 @@ export default function UserRating(props) {
                 Your Rating
             </label>
             <div className="flex gap-2">
-                {props.movies[props.index].userRating == null &&
+                {props.movie.userRating == null &&
                     <input id="steps-range"
                         type="range"
                         min="0"
@@ -21,27 +21,27 @@ export default function UserRating(props) {
                         onChange={(event) => handleRatingChange(parseInt(event.target.value))}
                         className="mt-2 w-48 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
                 }
-                {props.movies[props.index].userRating != null &&
+                {props.movie.userRating != null &&
                     <input id="disabled-range"
                         type="range"
                         min="0"
                         max="10"
-                        value={props.movies[props.index].userRating}
+                        value={props.movie.userRating}
                         step="1"
                         className="mt-2 w-48 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                         disabled
                         />
                 }
-                {props.movies[props.index].userRating == null &&
+                {props.movie.userRating == null &&
                     <div>{props.rating}</div>
                 }
-                {props.movies[props.index].userRating != null &&
-                    <div>{props.movies[props.index].userRating}</div>
+                {props.movie.userRating != null &&
+                    <div>{props.movie.userRating}</div>
                 }
             </div>
             
             {/* submit button */}
-            {!props.movies[props.index].isRated &&
+            {!props.movie.isRated &&
                 <button
                     className="font-semibold mt-2 bg-grey text-white py-2 px-2 rounded-lg hover:bg-gray-700"
                     onClick={() => props.handleAddRating(props.rating)}>

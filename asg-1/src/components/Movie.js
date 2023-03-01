@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Detail from "./Detail";
 import 'flowbite';
 
 export default function Movie(props) {
     const movie = props.movie;
     const index = props.index;
-
-    const [refresh, setRefresh] = useState(false);
 
     // this method replaces icon with error image
     const imageHandler = (e) => {
@@ -35,22 +31,18 @@ export default function Movie(props) {
         <div
             className="border rounded-xl shadow bg-gray-100 grid grid-rows-5"
             title={titleText}
-            key={index}>
+            key={movie.id}>
 
             {/* the poster portion */}
             <div className="relative row-span-4">
-                <Link to={`/detail/${movie.id}`}
-                            state={{
-                                movie: movie,
-                                index: index,
-                            }}>
+                <Link to={`/detail/${movie.id}`}>
                     {/* poster image */}
                     {movie.imageLoaded && (
                         <img
                             src={`https://www.themoviedb.org/t/p/w342${movie.poster}`}
                             className="rounded object-fill w-full h-full cursor-pointer"
                             onError={imageHandler}
-                            id={index}
+                            id={movie.id}
                         />
                     )}
                     {/* fallback image */}
