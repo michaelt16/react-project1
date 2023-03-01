@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom'
 
 export default function Browse(props){
     const [initialMovies] = useState(props.movies);
+    const [filterVisible, setFilterVisible] = useState(true)
 
     return(
         <div className="grid grid-cols-5 h-screen">
@@ -15,14 +16,15 @@ export default function Browse(props){
                 <div className="loader-container">
                     <div className="spinner"></div>
                 </div>}
-
-             <Filter
-                movies= {props.movies} 
-                genreList={props.genreList} 
-                initialMovies={initialMovies}
-                setMovies={props.setMovies}
-                copyMovies={props.copyMovies}
-            />
+            {filterVisible && 
+                <Filter
+                    movies= {props.movies} 
+                    genreList={props.genreList} 
+                    initialMovies={initialMovies}
+                    setMovies={props.setMovies}
+                    copyMovies={props.copyMovies}
+                />
+            }
 
             <MovieList
                 movies={props.movies}
@@ -31,6 +33,8 @@ export default function Browse(props){
                 copyMovies={props.copyMovies}
                 favoriteVisible={props.favoriteVisible}
                 setFavorite={props.setFavorite}
+                filterVisible={filterVisible}
+                setFilterVisible={setFilterVisible}
                 handleImageError={props.handleImageError}
                 //onClick={handleChange}
                 initialMovies={initialMovies}

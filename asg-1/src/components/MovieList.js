@@ -10,16 +10,8 @@ export default function MovieList(props) {
     const [sortOrderRating, setSortOrderRating] = useState("desc");
 
     const broken_image = require("../img/broken_image.png");
-
-    let outsideDivClassList = props.favoriteVisible? "col-span-3" : "col-span-4"
-    outsideDivClassList += " bg-gray-200 overflow-y-scroll hide-scroll"
-
-    let insideDivClassList = props.favoriteVisible? "grid-cols-3" : "grid-cols-4"
-    insideDivClassList += " grid gap-4 grid-rows-2 mt-4 mx-4"
    
     const handleTitle = (e)=>{
-        // let reversed =  [...props.movies].reverse()
-        //console.log("reversed",reversed)
         props.setMovies(props.initialMovies)
         let sorted = [...props.movies].sort((movie1, movie2)=>{
             return sortOrderTitle === "asc"
@@ -52,18 +44,34 @@ export default function MovieList(props) {
             ?movie1.ratings.average.toString().localeCompare(movie2.ratings.average.toString())
             : movie2.ratings.average.toString().localeCompare(movie1.ratings.average.toString());
         })
-        
         setSortOrderRating(sortOrderRating === "asc" ? "desc" : "asc");
         setSortOrderDate("desc");
         setSortOrderTitle("asc");
         props.setMovies(sorted);
-
     }
 
+    let outSideColSpan = 0;
+    if (props.filterVisible && props.favoriteVisible) outSideColSpan = 3
+    else if (!props.filterVisible && !props.favoriteVisible) outSideColSpan = 5
+    else outSideColSpan = 4
+
+    let inSideColSpan = 0;
+    if (props.filterVisible && props.favoriteVisible) inSideColSpan = 3
+    else if (!props.filterVisible && !props.favoriteVisible) inSideColSpan = 5
+    else inSideColSpan = 4
+
     return (
-        <div className={outsideDivClassList}>
+        <div className={`col-span-${outSideColSpan} bg-gray-200 overflow-y-scroll hide-scroll`}>
             <div className="grid grid-cols-2 gap-4 p-4">
-                <div className="text-xl font-bold">Movies</div>
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => {props.setFilterVisible(!props.filterVisible)}}
+                        title={props.filterVisible? "Close filter" : "Open filter"}
+                        className="border pb-1 px-2 text-xl rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600">
+                        {props.filterVisible? "⇦" : "⇨"}
+                    </button>
+                    <div className="text-xl font-bold">Movies</div>
+                </div>
                 <div className="flex justify-end">
                     <div className="inline-block">Sort By:</div>
                         <div className="mx-2 justify-items-end">
@@ -74,7 +82,7 @@ export default function MovieList(props) {
                 </div>
             </div>
 
-            <div className={insideDivClassList}>
+            <div className={`grid grid-cols-${inSideColSpan} gap-4 grid-rows-2 mt-4 mx-4`}>
                 {props.movies.length > 0?
                 props.movies.map((movie, index) =>
                     <Movie

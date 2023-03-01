@@ -8,10 +8,7 @@ export default function Header(props) {
     function handleClick(){
         navigate("/")
         const getLocal = JSON.parse(localStorage.getItem("movies"))
-        console.log("retrieved",getLocal)
         props.setMovies(getLocal)
-        // console.log("testsetsets",props.copyMovies)
-        // props.setMovies(props.copyMovies)
     }
     const [open,setOpen] = useState(false)
     const handleOpen = () => setOpen(true);
@@ -27,8 +24,6 @@ export default function Header(props) {
             </div>
 
             <div>
-
-                {console.log(open)}
                 <button className="bg-gray-600 w-20 text-white font-semibold py-2 px-2 mr-10 rounded-lg hover:bg-gray-700" onClick={handleOpen}>
                     About
                 </button>
