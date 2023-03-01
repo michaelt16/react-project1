@@ -35,9 +35,10 @@ export default function Home(props){
             
             {props.favoriteVisible && 
                         <Favorite
-                            movies={props.movies}
+                            movies={props.copyMovies}
                             closeFavorite={props.closeFavorite}
-                            setMovies={props.setMovies} />}
+                            setCopyMovies={props.backgroundsetCopyMovies}
+                            setMovies={props.setCopyMovies} />}
         </div>
     )
     

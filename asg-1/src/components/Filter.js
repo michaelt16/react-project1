@@ -128,19 +128,17 @@ export default function Filter(props){
     const handleClear=(e)=>{
         console.log("reseted, here is intial movies:",props.initialMovies)
         try{
-            console.log("initial movie is submitted!")
-            props.setMovies(props.initialMovies)
-            
-        }catch(e){
-            console.log("error",e.message)
+            console.log("initial movie is submitted!");
+            props.setMovies(props.initialMovies);
+        } catch(e) {
+            console.log("error",e.message);
         }
         
-        setRange(5)
-        setBeforeAfterRatingToggle("Before")
-        setBeforeAfterDateToggle("Before")
-        setTitleValue("")
-        setDateValue("")
-        
+        setRange(5);
+        setBeforeAfterRatingToggle("Before");
+        setBeforeAfterDateToggle("Before");
+        setTitleValue("");
+        setDateValue("");
     }
 
     return(

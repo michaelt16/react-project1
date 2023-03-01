@@ -81,7 +81,7 @@ export default function Detail(props) {
                     <h2 className="text-4xl font-bold mb-2">{movie.title}</h2>
                     <h2 className="text-4xl px-2">({movie.release_date.substring(0, 4)})</h2>
                     <button className="text-2xl px-1"
-                        onClick={() => props.setFavorite(index)}>
+                        onClick={() => props.setFavorite(movie.id)}>
                         {favoriteIcon}
                     </button>
                 </div>
@@ -132,8 +132,8 @@ export default function Detail(props) {
             </div>
             {props.favoriteVisible && 
                 <Favorite
-                    movies={props.movies}
-                    setMovies={props.setMovies}
+                    movies={props.copyMovies}
+                    setMovies={props.setCopyMovies}
                     closeFavorite={props.closeFavorite}/>}
         </div>
       );

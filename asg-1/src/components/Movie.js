@@ -14,13 +14,22 @@ export default function Movie(props) {
         props.handleImageError(e);
     };
 
-    const favoriteHandler = (i) => {
-        props.setFavorite(i);
+    const favoriteHandler = (id) => {
+        props.setFavorite(id);
     };      
 
     // concat the title with the year
     const titleText = `${movie.title} (${movie.release_date.substring(0, 4)})`
-    const favoriteIcon = movie.isFavorited? "💙" : "🤍";
+
+    let isFavorited;
+    
+    // retrieve the favorite status of the movie
+    for (let m of props.copyMovies) {
+        if (m.id == movie.id) {
+            isFavorited = m.isFavorited;
+        }
+    }
+    const favoriteIcon = isFavorited? "💙" : "🤍";
 
     return (
         <div
@@ -71,8 +80,8 @@ export default function Movie(props) {
                     <button
                         type="button"
                         className="relative text-2xl items-center justify-center"
-                        onClick={() => favoriteHandler(index)}
-                        title="Add to Favorite">
+                        onClick={() => favoriteHandler(movie.id)}
+                        title={props.copyMovies[index].isFavorited? "Remove from Favorite" : "Add to Favorite"}>
                         {favoriteIcon}
                     </button>
                 </div>

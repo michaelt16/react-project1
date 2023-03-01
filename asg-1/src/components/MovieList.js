@@ -41,7 +41,7 @@ export default function MovieList(props) {
       props.setMovies(sorted);
   };
 
-    const handleRating = (e)=>{
+    const handleRating = (e) => {
          props.setMovies(props.initialMovies)
         let sorted = [...props.movies].slice().sort((movie1,movie2)=>{
             return sortOrderRating ==="asc"
@@ -79,6 +79,8 @@ export default function MovieList(props) {
                         broken_image={broken_image}
                         handleImageError={props.handleImageError}
                         setMovies={props.setMovies}
+                        copyMovies={props.copyMovies}
+                        setCopyMovies={props.setCopyMovies}
                         setFavorite={props.setFavorite}
                         />
                 ):

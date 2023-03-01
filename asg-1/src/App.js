@@ -11,8 +11,11 @@ function App() {
     
     const [movies, setMovies] = useState([]);
     const [favoriteVisible, setfavoriteVisible] = useState(false);
-    const  [copyMovies,setCopyMovies]=useState([])
-    const [searchedMovies,setSearchedMovies]=useState([])
+    // a back up movie list specially used for favorite function
+    // we can implement favorite on state
+    // but we want favorite remains even after refresh
+    const [copyMovies, setCopyMovies] = useState([])
+    const [searchedMovies,setSearchedMovies] = useState([])
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
     }
@@ -23,12 +26,17 @@ function App() {
       setMovies(newVal)
      // setSearchedMovies (newVal)
     }
-    const setFavorite = (i) => {
-      const updatedMovies = [...movies];
-      updatedMovies[i].isFavorited = !updatedMovies[i].isFavorited;
+    const setFavorite = (id) => {
+      const updatedMovies = [...copyMovies];
+      // switch isFavorited boolean
+      for (let movie of updatedMovies) {
+        if (movie.id == id) {
+          movie.isFavorited = !movie.isFavorited;
+        }
+      }
+      setCopyMovies(updatedMovies)
       // update local storage so that the favorite remains
       localStorage.setItem("movies", JSON.stringify(updatedMovies))
-      setMovies(updatedMovies)
     }
 
     // this method replaces icon with error image
@@ -51,7 +59,6 @@ function App() {
                   data.sort((a, b) => {
                     return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
                   });
-                  console.log(data);
                   // create an key imageLoaded to indicate if the image is successfully loaded
                   data.forEach(e => e["imageLoaded"] = true);
                   data.forEach(e => e["isFavorited"] = false);
@@ -59,6 +66,7 @@ function App() {
                   data.forEach(e => e["userRating"] = null);
                   localStorage.setItem("movies", JSON.stringify(data));
                   setMovies(JSON.parse(localStorage.getItem("movies")))
+                  // create a backup
                   setCopyMovies(JSON.parse(localStorage.getItem("movies")))
               });       
       } else {
@@ -95,6 +103,8 @@ function App() {
               favoriteVisible={favoriteVisible}
               setMovies={setMovies}
               movies={movies}
+              copyMovies={copyMovies}
+              setCopyMovies={setCopyMovies}
               onClick={handleChange}
               />} />
 
@@ -102,9 +112,10 @@ function App() {
               closeFavorite={closeFavorite}
                 favoriteVisible={favoriteVisible}
                 setFavorite={setFavorite}
-                setMovies={setMovies}
                 movies={movies}
+                setMovies={setMovies}
                 copyMovies={copyMovies}
+                setCopyMovies={setCopyMovies}
                 genreList = {genreList()}/>} />
 
             <Route path="/browse"
@@ -114,7 +125,8 @@ function App() {
                 setFavorite={setFavorite}
                 setMovies={setMovies}
                 movies={movies}
-                 copyMovies={copyMovies}
+                copyMovies={copyMovies}
+                setCopyMovies={setCopyMovies}
                 handleImageError={handleImageError}
                 genreList = {genreList()}
                 />} />
@@ -122,6 +134,8 @@ function App() {
             <Route path="/detail/:id" element={<Detail
                 setMovies={setMovies}
                 movies={movies}
+                copyMovies={copyMovies}
+                setCopyMovies={setCopyMovies}
                 setFavorite={setFavorite}
                 favoriteVisible={favoriteVisible}
             />} />
