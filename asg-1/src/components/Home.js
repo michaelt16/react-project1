@@ -5,17 +5,19 @@ import { useState } from "react";
 
 export default function Home(props){
     const [searchInput, setSearchInput] = useState("");
-
+    // useState for search input
     function handleChange (e) {
         e.preventDefault()
         setSearchInput(e.target.value)
     }
+    // sets the usestate seachInput onChange
     function handleSubmit() {
         let results = props.copyMovies.filter((data)=>{
            return data.title.toLowerCase().match(searchInput.toLowerCase())
         })
         props.setMovies(results)
     }
+    //filters on submit
 
     return(
         <div className="grid grid-cols-5 bg-cover bg-center" style={{ backgroundImage: `url(${background})`, height: "100vh" }}>

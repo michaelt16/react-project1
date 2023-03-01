@@ -13,6 +13,7 @@ export default function Header(props) {
         // console.log("testsetsets",props.copyMovies)
         // props.setMovies(props.copyMovies)
     }
+    // sets the state for opening and closing modal
     const [open,setOpen] = useState(false)
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

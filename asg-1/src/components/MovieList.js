@@ -16,10 +16,8 @@ export default function MovieList(props) {
 
     let insideDivClassList = props.favoriteVisible? "grid-cols-3" : "grid-cols-4"
     insideDivClassList += " grid gap-4 grid-rows-2 mt-4 mx-4"
-   
+    // switching back and forth between title asc and desc
     const handleTitle = (e)=>{
-        // let reversed =  [...props.movies].reverse()
-        //console.log("reversed",reversed)
         props.setMovies(props.initialMovies)
         let sorted = [...props.movies].sort((movie1, movie2)=>{
             return sortOrderTitle === "asc"
@@ -31,6 +29,7 @@ export default function MovieList(props) {
         setSortOrderRating("desc");
         props.setMovies(sorted)
     }
+    // switching back and forth between date asc and desc
     const handleDate = (e) => {
         props.setMovies(props.initialMovies)
         let sorted = [...props.movies].slice().sort((movie1, movie2) => {
@@ -44,7 +43,7 @@ export default function MovieList(props) {
         setSortOrderRating("desc");
         props.setMovies(sorted);
   };
-
+    // switching back and forth between rating asc and desc
     const handleRating = (e) => {
          props.setMovies(props.initialMovies)
         let sorted = [...props.movies].slice().sort((movie1,movie2)=>{
