@@ -4,7 +4,7 @@ import Rating from "./Rating";
 import UserRating from "./UserRating";
 import { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from 'react-router-dom';
-
+import Modal from "react-modal"
 export default function Detail(props) {
     // query parameter
     const { id } = useParams();
@@ -40,6 +40,27 @@ export default function Detail(props) {
     const favoriteIcon = targetMovie.isFavorited? "💙" : "🤍";
 
     const broken_image = require("../img/broken_image.png");
+    const customStyles = {
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "#1A1A1A",
+          border: "none",
+          borderRadius: "8px",
+          padding: "0",
+        },
+        overlay: {
+          backgroundColor: "rgba(0,0,0,0.7)",
+          zIndex: "1000",
+        },
+      };
+    const [open,setOpen] = useState(false)
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     
     return (
         <div className="grid grid-cols-5 h-screen">
@@ -49,22 +70,32 @@ export default function Detail(props) {
                 {movie.imageLoaded && (
                     <img
                         src={`https://www.themoviedb.org/t/p/w780${movie.poster}`}
-                        className="rounded object-cover w-full hover:scale-150"
+                        className="rounded-lg object-cover cursor-pointer "
                         id={movie.id}
                         alt={movie.title}
+                        onClick={handleOpen}
                     />
-                    
                 )}
                 {/* fallback image */}
                 {!movie.imageLoaded && (
                     <img
                         src={broken_image}
-                        className="rounded object-cover w-full cursor-pointer"
+                        className="rounded-lg object-cover w-full cursor-pointer"
                         id={movie.id}
                         alt={movie.title}
                         title={movie.title}
+                        onClick={handleOpen}
                     />
                 )}
+
+                <Modal isOpen={open} onRequestClose={handleClose} style={customStyles}>
+
+                <img
+                     src={`https://www.themoviedb.org/t/p/w780${movie.poster}`}
+                     className="rounded object-cover w-96"
+                        alt={movie.title}
+          />
+                </Modal>
                 {/* button portion */}
                 <div className="flex py-5 justify-center">
                     <Link to="/browse">
