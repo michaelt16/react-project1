@@ -23,6 +23,7 @@ export default function MovieList(props) {
         setSortOrderRating("desc");
         props.setMovies(sorted)
     }
+    // switching back and forth between date asc and desc
     const handleDate = (e) => {
         props.setMovies(props.initialMovies)
         let sorted = [...props.movies].slice().sort((movie1, movie2) => {
@@ -36,7 +37,7 @@ export default function MovieList(props) {
         setSortOrderRating("desc");
         props.setMovies(sorted);
   };
-
+    // switching back and forth between rating asc and desc
     const handleRating = (e) => {
          props.setMovies(props.initialMovies)
         let sorted = [...props.movies].slice().sort((movie1,movie2)=>{

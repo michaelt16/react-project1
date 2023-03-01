@@ -10,6 +10,7 @@ export default function Header(props) {
         const getLocal = JSON.parse(localStorage.getItem("movies"))
         props.setMovies(getLocal)
     }
+    // sets the state for opening and closing modal
     const [open,setOpen] = useState(false)
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

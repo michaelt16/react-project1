@@ -53,6 +53,7 @@ export default function Detail(props) {
                         id={movie.id}
                         alt={movie.title}
                     />
+                    
                 )}
                 {/* fallback image */}
                 {!movie.imageLoaded && (
