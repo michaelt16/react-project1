@@ -8,38 +8,36 @@ import { useParams, useLocation, Link } from 'react-router-dom';
 export default function Detail(props) {
     // query parameter
     const { id } = useParams();
-    // parameters passed in by Link
-    const location = useLocation();
-    const movie = location.state.movie;
-    const index = location.state.index;
+    const movie = props.copyMovies.find(m => m.id == id);
     
     const [rating, setRating] = useState(0);
 
     const imdbLink = `https://www.imdb.com/title/${movie.imdb_id}`;
     const tmdbLink = `https://www.themoviedb.org/movie/${movie.tmdb_id}`;
 
-    // const handleRatingChange = (event) => {
-    //     setRating(parseInt(event.target.value));
-    // }
-
     const handleAddRating = (rating) => {
-        const updatedMovies = JSON.parse(localStorage.getItem("movies"));
-        updatedMovies[index].isRated = true;
-        updatedMovies[index].userRating = rating;
+        let updatedMovies = props.copyMovies.map(m => {
+            if (m.id == id) {
+              m.isRated = true;
+              m.userRating = rating;
+            }
+            return m;
+        });
         // update local storage so that the favorite remains
-        localStorage.setItem("movies", JSON.stringify(updatedMovies))
-        props.setMovies(updatedMovies)
+        localStorage.setItem("movies", JSON.stringify(updatedMovies));
+        props.setCopyMovies(updatedMovies);
     }
 
     let genres = ""
-    props.movies[index].details.genres.forEach(genre => {
+    movie.details.genres.forEach(genre => {
         genres += genre.name + ", ";
     })
     // remove the last comma
     genres = genres.slice(0, -2);
     
     // concat the title with the year
-    const favoriteIcon = props.movies[index].isFavorited? "💙" : "🤍";
+    const targetMovie = props.copyMovies.find(m => m.id == id);
+    const favoriteIcon = targetMovie.isFavorited? "💙" : "🤍";
 
     const broken_image = require("../img/broken_image.png");
     
@@ -107,9 +105,8 @@ export default function Detail(props) {
                 </div>
                 
                 {/* rating range slider */}
-                <UserRating 
-                    movies={props.movies}
-                    index={index}
+                <UserRating
+                    movie={movie}
                     setRating={setRating}
                     handleAddRating={handleAddRating}
                     rating={rating}
