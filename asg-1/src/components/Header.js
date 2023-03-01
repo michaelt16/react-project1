@@ -8,6 +8,8 @@ export default function Header(props) {
         const getLocal = JSON.parse(localStorage.getItem("movies"))
         console.log("retrieved",getLocal)
         props.setMovies(getLocal)
+        // console.log("testsetsets",props.copyMovies)
+        // props.setMovies(props.copyMovies)
     }
     return (
         <nav className="flex items-center justify-between bg-grey">

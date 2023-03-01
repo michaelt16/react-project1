@@ -16,7 +16,7 @@ export default function MovieList(props) {
 
     let insideDivClassList = props.favoriteVisible? "grid-cols-3" : "grid-cols-4"
     insideDivClassList += " grid gap-4 grid-rows-2 mt-4 mx-4"
-    const initialMovies = props.initialMovies
+   
     const handleTitle = (e)=>{
         // let reversed =  [...props.movies].reverse()
         //console.log("reversed",reversed)

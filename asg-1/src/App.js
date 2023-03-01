@@ -8,9 +8,10 @@ import css from "./App.css";
 
 function App() {
     const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
-
+    
     const [movies, setMovies] = useState([]);
     const [favoriteVisible, setfavoriteVisible] = useState(false);
+    const  [copyMovies,setCopyMovies]=useState([])
     const [searchedMovies,setSearchedMovies]=useState([])
     const closeFavorite = () => {
       setfavoriteVisible(!favoriteVisible);
@@ -58,9 +59,11 @@ function App() {
                   data.forEach(e => e["userRating"] = null);
                   localStorage.setItem("movies", JSON.stringify(data));
                   setMovies(JSON.parse(localStorage.getItem("movies")))
-              });
+                  setCopyMovies(JSON.parse(localStorage.getItem("movies")))
+              });       
       } else {
           setMovies(JSON.parse(localStorage.getItem("movies")))
+        
       }
     // dependency array to prevent useEffect gets called every render
     }, []);
@@ -80,9 +83,11 @@ function App() {
       } 
     return (
       <div className="App">
+        {console.log("Trst",copyMovies)}
         <BrowserRouter>
           <Header closeFavorite={closeFavorite} 
-          setMovies = {setMovies}/>
+          setMovies = {setMovies}
+          copyMovies={copyMovies}/>
 
           <Routes>
             <Route path="/" element={<Home
@@ -99,6 +104,7 @@ function App() {
                 setFavorite={setFavorite}
                 setMovies={setMovies}
                 movies={movies}
+                copyMovies={copyMovies}
                 genreList = {genreList()}/>} />
 
             <Route path="/browse"
@@ -108,6 +114,7 @@ function App() {
                 setFavorite={setFavorite}
                 setMovies={setMovies}
                 movies={movies}
+                 copyMovies={copyMovies}
                 handleImageError={handleImageError}
                 genreList = {genreList()}
                 />} />
