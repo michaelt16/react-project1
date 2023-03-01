@@ -65,43 +65,29 @@ export default function Filter(props){
         // handle title search
         if (titleValue != "") {
             // change the search result with every key stroke
-            results = props.copyMovies.filter((data)=>{
-                return data.title.toLowerCase().includes(titleValue.toLowerCase())
-            })
+            results = props.copyMovies.filter(data => data.title.toLowerCase().includes(titleValue.toLowerCase()))
         }
         // handle title search
         if (titleValue != "") {
-            results = props.copyMovies.filter((movie)=>{
-                return movie.title.toLowerCase().includes(titleValue.toLowerCase())
-            })
+            results = props.copyMovies.filter(movie=> movie.title.toLowerCase().includes(titleValue.toLowerCase()))
         }
         // handle genre
         if (genre != "") {
-            results = props.copyMovies.filter((movie)=>{
-                return movie.details.genres.some((g) => g.name === genre);
-            })
+            results = props.copyMovies.filter(movie => movie.details.genres.some(g => g.name === genre))
         }
         // handle date
         if (dateValue != "") {
             if (beforeAfterDateToggle === "Before") {
-                results = props.copyMovies.filter((data)=>{
-                    return data.release_date.substring(0,4) <= dateValue
-                })
+                results = props.copyMovies.filter(data => data.release_date.substring(0,4) <= dateValue)
             } else {
-                results = props.copyMovies.filter((data)=>{
-                    return data.release_date.substring(0,4) >= dateValue
-                })
+                results = props.copyMovies.filter(data => data.release_date.substring(0,4) >= dateValue)
             }
         }
         if (range != "") {
             if(beforeAfterRatingToggle === "Before"){
-                results = props.copyMovies.filter((data) => {
-                    return data.ratings.average <= range
-                })
+                results = props.copyMovies.filter(data => data.ratings.average <= range)
             } else {
-                results = props.copyMovies.filter((data)=>{
-                    return data.ratings.average >= range
-                })
+                results = props.copyMovies.filter(data => data.ratings.average >= range)
             }
         }
         if (results == undefined) {

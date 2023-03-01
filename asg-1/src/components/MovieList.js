@@ -5,9 +5,9 @@ import { useState } from "react";
 export default function MovieList(props) {
 
     const close = () => <Link to="/browse"></Link>
-    const [sortOrderTitle,setSortOrderTitle]=useState("asc")
-    const [sortOrderDate, setSortOrderDate] = useState("asc");
-    const [sortOrderRating, setSortOrderRating] = useState("asc")
+    const [sortOrderTitle,setSortOrderTitle]=useState("desc");
+    const [sortOrderDate, setSortOrderDate] = useState("desc");
+    const [sortOrderRating, setSortOrderRating] = useState("desc");
 
     const broken_image = require("../img/broken_image.png");
 
@@ -21,24 +21,28 @@ export default function MovieList(props) {
         // let reversed =  [...props.movies].reverse()
         //console.log("reversed",reversed)
         props.setMovies(props.initialMovies)
-        let sorted = [...props.movies].sort((movie1,movie2)=>{
-            return sortOrderTitle ==="asc"
+        let sorted = [...props.movies].sort((movie1, movie2)=>{
+            return sortOrderTitle === "asc"
             ? movie1.title.localeCompare(movie2.title)
             : movie2.title.localeCompare(movie1.title);
         })
         setSortOrderTitle(sortOrderTitle === "asc" ? "desc" : "asc" );
+        setSortOrderDate("desc");
+        setSortOrderRating("desc");
         props.setMovies(sorted)
     }
     const handleDate = (e) => {
-         props.setMovies(props.initialMovies)
+        props.setMovies(props.initialMovies)
         let sorted = [...props.movies].slice().sort((movie1, movie2) => {
                 return sortOrderDate === "asc"
             ? movie1.release_date.localeCompare(movie2.release_date)
             : movie2.release_date.localeCompare(movie1.release_date);
         });
-
-      setSortOrderDate(sortOrderDate === "asc" ? "desc" : "asc");
-      props.setMovies(sorted);
+    
+        setSortOrderDate(sortOrderDate === "asc" ? "desc" : "asc");
+        setSortOrderTitle("asc");
+        setSortOrderRating("desc");
+        props.setMovies(sorted);
   };
 
     const handleRating = (e) => {
@@ -47,9 +51,11 @@ export default function MovieList(props) {
             return sortOrderRating ==="asc"
             ?movie1.ratings.average.toString().localeCompare(movie2.ratings.average.toString())
             : movie2.ratings.average.toString().localeCompare(movie1.ratings.average.toString());
-
         })
+        
         setSortOrderRating(sortOrderRating === "asc" ? "desc" : "asc");
+        setSortOrderDate("desc");
+        setSortOrderTitle("asc");
         props.setMovies(sorted);
 
     }
