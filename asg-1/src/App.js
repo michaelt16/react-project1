@@ -14,7 +14,7 @@ function App() {
     // we can implement favorite on state
     // but we want favorite remains even after refresh
     const [copyMovies, setCopyMovies] = useState([])
-    const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=30";
+    const URL = "https://www.randyconnolly.com/funwebdev/3rd/api/movie/movies-brief.php?limit=200";
 
 
     const closeFavorite = () => {
