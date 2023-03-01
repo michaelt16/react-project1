@@ -115,6 +115,16 @@ export default function Filter(props){
         }
             
     }
+    // const showAll =(e)=>{
+    //     e.preventDefault()
+    //     console.log("all",props.copyMovies)
+    //     try{
+    //         console.log("showing all!")
+    //         props.onSubmit(props.copyMovies)
+    //     }catch(e){
+    //         console.log("error",e.message)
+    //     }
+    // }
     const handleClear=(e)=>{
         console.log("reseted, here is intial movies:",props.initialMovies)
         try{
@@ -161,6 +171,7 @@ export default function Filter(props){
             <div className="flex justify-center gap-2">
                 <input type="submit" value ="Submit" name="submit" className="border p-2 px-4 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
                 <input type="reset" name="clear"onClick={handleClear} value="Clear" className="border p-2 px-6 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input>
+                {/* <input type = "submit" name = "showAll" onClick ={showAll} value="Show All" className="border p-2 px-6 rounded-md bg-grey text-white cursor-pointer hover:bg-gray-600"></input> */}
             </div>
             </form>
         </div>

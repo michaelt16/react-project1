@@ -13,7 +13,7 @@ export default function Home(props){
    }
    function handleSubmit(e){
        console.log(searchInput)
-       let searched = props.movies.filter((data)=>{
+       let searched = [...props.movies].filter((data)=>{
            return data.title.toLowerCase().match(searchInput.toLowerCase())
        })
        props.onClick(searched)
