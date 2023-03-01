@@ -17,11 +17,13 @@ export default function Home(props){
         })
         props.setMovies(results)
     }
-    //filters on submit
+    
+    let divClass = props.favoriteVisible? "col-span-4" : "col-span-5";
+    divClass += " py-60";
 
     return(
         <div className="grid grid-cols-5 bg-cover bg-center" style={{ backgroundImage: `url(${background})`, height: "100vh" }}>
-            <div className={`py-60 col-span-4`}>
+            <div className={divClass}>
                  <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg">
                     <input onChange={handleChange} className="my-4 w-full p-4 rounded-lg " type="text" placeholder="Search Movies..." />
                     <Link to="/browse">

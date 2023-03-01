@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function MovieList(props) {
 
     const close = () => <Link to="/browse"></Link>
-    const [sortOrderTitle,setSortOrderTitle]=useState("desc");
+    const [sortOrderTitle,setSortOrderTitle] = useState("desc");
     const [sortOrderDate, setSortOrderDate] = useState("desc");
     const [sortOrderRating, setSortOrderRating] = useState("desc");
 
@@ -51,18 +51,17 @@ export default function MovieList(props) {
         props.setMovies(sorted);
     }
 
-    let outSideColSpan = 0;
-    if (props.filterVisible && props.favoriteVisible) outSideColSpan = 3
-    else if (!props.filterVisible && !props.favoriteVisible) outSideColSpan = 5
-    else outSideColSpan = 4
+    let outSideClass = (props.filterVisible && props.favoriteVisible) ? "col-span-3" :
+        (!props.filterVisible && !props.favoriteVisible) ? "col-span-5" : "col-span-4"
+    outSideClass += " bg-gray-200 overflow-y-scroll hide-scroll"
 
-    let inSideColSpan = 0;
-    if (props.filterVisible && props.favoriteVisible) inSideColSpan = 3
-    else if (!props.filterVisible && !props.favoriteVisible) inSideColSpan = 5
-    else inSideColSpan = 4
+    let inSideColSpan = (props.filterVisible && props.favoriteVisible) ? "grid-cols-3" :
+    (!props.filterVisible && !props.favoriteVisible) ? "grid-cols-5" : "grid-cols-4"
+    inSideColSpan += " grid gap-4 grid-rows-2 mt-4 mx-4"
+    
 
     return (
-        <div className={`col-span-${outSideColSpan} bg-gray-200 overflow-y-scroll hide-scroll`}>
+        <div className={outSideClass}>
             <div className="grid grid-cols-2 gap-4 p-4">
                 <div className="flex gap-2">
                     <button
@@ -83,7 +82,7 @@ export default function MovieList(props) {
                 </div>
             </div>
 
-            <div className={`grid grid-cols-${inSideColSpan} gap-4 grid-rows-2 mt-4 mx-4`}>
+            <div className={inSideColSpan}>
                 {props.movies.length > 0?
                 props.movies.map((movie, index) =>
                     <Movie
