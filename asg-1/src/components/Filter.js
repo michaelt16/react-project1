@@ -73,7 +73,16 @@ export default function Filter(props){
         }
         // handle genre
         if (genre != "") {
-            results = props.copyMovies.filter(movie => movie.details.genres.some(g => g.name === genre))
+            // results = props.copyMovies.filter(movie => {
+            //     movie.details.genres.some(g => g.name === genre)
+            //     return movie.details.genres.filter(g => g.name == genre);
+            // })
+            results = props.copyMovies.filter(movie => 
+                movie.details && 
+                movie.details.genres && 
+                movie.details.genres.some(g => g.name === genre)
+            );
+              
         }
         // handle date
         if (dateValue != "") {
