@@ -1,7 +1,7 @@
 # COMP 4513 REACT MOVIE APP
 
-# SAM IF YOU CAN SEE THIS READ ME EMAIL ME AT CHAOXDRAG920@GMAIL.COM
-ive been trying to find internet for discord. limited internet here but yea email me for communication 
+## **Website Link**
+https://web3-2023-michaeltandyo-samtang.netlify.app/ 
 
 ## **Description**
 This web apps allows the browsing, favoriting and filtering of movies
@@ -38,3 +38,9 @@ Clear -> Clears any filter value that was inputed previously
 ```sh
 Reset -> Resets the applied filter and shows all movies
 ```
+
+Extra Functionalities
+```sh
+Can Click on movie poster in details view for pop up.
+```
+
