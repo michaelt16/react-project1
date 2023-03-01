@@ -24,3 +24,14 @@ npm start
 ```
 link to the assignment 
 https://learn.mru.ca/d2l/le/content/23823/viewContent/489901/View 
+
+Filter Functionalities
+```sh
+Submit -> Applies filter
+```
+```sh
+Clear -> Clears any filter value that was inputed previously
+```
+```sh
+Reset -> Resets the applied filter and shows all movies
+```
