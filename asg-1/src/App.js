@@ -71,13 +71,13 @@ function App() {
               });       
       } else {
           setMovies(JSON.parse(localStorage.getItem("movies")))
-        
+          setCopyMovies(JSON.parse(localStorage.getItem("movies")))
       }
     // dependency array to prevent useEffect gets called every render
     }, []);
     const genreList =()=>{
         const genre=[];
-        movies.map((movie)=>{
+        copyMovies.map((movie)=>{
           if (movie.details.genres != null){
                movie.details.genres.map((data)=>{        
                     const exists = genre.includes(data.name) 
@@ -91,7 +91,6 @@ function App() {
       } 
     return (
       <div className="App">
-        {console.log("Trst",copyMovies)}
         <BrowserRouter>
           <Header closeFavorite={closeFavorite} 
           setMovies = {setMovies}
@@ -105,18 +104,19 @@ function App() {
               movies={movies}
               copyMovies={copyMovies}
               setCopyMovies={setCopyMovies}
-              onClick={handleChange}
-              />} />
+              onClick={handleChange} />}
+            />
 
             <Route path="/search" element={<Browse 
               closeFavorite={closeFavorite}
                 favoriteVisible={favoriteVisible}
                 setFavorite={setFavorite}
-                movies={movies}
                 setMovies={setMovies}
+                movies={movies}
                 copyMovies={copyMovies}
                 setCopyMovies={setCopyMovies}
-                genreList = {genreList()}/>} />
+                genreList = {genreList()} />}
+            />
 
             <Route path="/browse"
               element={<Browse
@@ -129,7 +129,8 @@ function App() {
                 setCopyMovies={setCopyMovies}
                 handleImageError={handleImageError}
                 genreList = {genreList()}
-                />} />
+                />}
+            />
 
             <Route path="/detail/:id" element={<Detail
                 setMovies={setMovies}
@@ -137,8 +138,9 @@ function App() {
                 copyMovies={copyMovies}
                 setCopyMovies={setCopyMovies}
                 setFavorite={setFavorite}
-                favoriteVisible={favoriteVisible}
-            />} />
+                favoriteVisible={favoriteVisible} />}
+            />
+
           </Routes>
       </BrowserRouter>
       </div>

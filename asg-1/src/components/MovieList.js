@@ -56,21 +56,20 @@ export default function MovieList(props) {
 
     return (
         <div className={outsideDivClassList}>
-           <div className="grid grid-cols-2 gap-4 p-4">
-            <div className="text-xl font-bold">Movies</div>
-            <div className="flex justify-center">
-             <div className="inline-block font-bold">Sort By:</div>
-             <div className="mx-2">
-              <label className="inline-block mx-4 font-bold mr-2 cursor-pointer" onClick={handleTitle}>Title</label>
-             <label className="inline-block mx-4 font-bold mr-2 cursor-pointer" onClick = {handleDate}>Date</label>
-            <label className="inline-block mx-4 font-bold cursor-pointer" onClick={handleRating}>Rating</label>
-             </div>
+            <div className="grid grid-cols-2 gap-4 p-4">
+                <div className="text-xl font-bold">Movies</div>
+                <div className="flex justify-end">
+                    <div className="inline-block">Sort By:</div>
+                        <div className="mx-2 justify-items-end">
+                            <label className="inline-block mx-4 font-bold mr-2 cursor-pointer" onClick={handleTitle}>Title</label>
+                            <label className="inline-block mx-4 font-bold mr-2 cursor-pointer" onClick = {handleDate}>Date</label>
+                            <label className="inline-block mx-4 font-bold cursor-pointer" onClick={handleRating}>Rating</label>
+                        </div>
+                </div>
             </div>
-            </div>
-           
+
             <div className={insideDivClassList}>
-               
-                {props.movies.length>0?
+                {props.movies.length > 0?
                 props.movies.map((movie, index) =>
                     <Movie
                         key={movie.id}
@@ -82,9 +81,8 @@ export default function MovieList(props) {
                         copyMovies={props.copyMovies}
                         setCopyMovies={props.setCopyMovies}
                         setFavorite={props.setFavorite}
-                        />
-                ):
-                    <p className="mx-20 w-full mt-8 col-span-2">no results found.</p>}
+                        />):
+                    <p className="mx-20 w-full mt-8 col-span-2">No results found.</p>}
             </div>
         </div>
     );
