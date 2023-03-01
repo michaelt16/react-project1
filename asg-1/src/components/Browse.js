@@ -9,6 +9,13 @@ export default function Browse(props){
 
     return(
         <div className="grid grid-cols-5 h-screen">
+            {/* loading animation */}
+            {/* ref: https://stackabuse.com/how-to-create-a-loading-animation-in-react-from-scratch/ */}
+            {props.loading &&
+                <div className="loader-container">
+                    <div className="spinner"></div>
+                </div>}
+
              <Filter
                 movies= {props.movies} 
                 genreList={props.genreList} 

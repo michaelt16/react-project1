@@ -9,6 +9,7 @@ import css from "./App.css";
 function App() {
     const [movies, setMovies] = useState([]);
     const [favoriteVisible, setfavoriteVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     // a back up movie list specially used for favorite function
     // we can implement favorite on state
     // but we want favorite remains even after refresh
@@ -61,8 +62,6 @@ function App() {
       return genre;
     }
 
-
-    
     useEffect(() => {
         // if local storage has nothing
         if (localStorage.getItem("movies") == null) {
@@ -70,6 +69,7 @@ function App() {
             fetch(URL)
                 .then((resp) => resp.json())
                 .then((data) => {
+                    setLoading(true);
                     // sorting by title
                     data.sort((a, b) => {
                       return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
@@ -83,10 +83,19 @@ function App() {
                     setMovies(JSON.parse(localStorage.getItem("movies")))
                     // create a backup
                     setCopyMovies(JSON.parse(localStorage.getItem("movies")))
-                });       
+                    // to demo the loading animation, make it last for 1.5 seconds
+                    setTimeout(() => {
+                      setLoading(false);
+                    }, 1500);
+                });  
+        // in case the local storage already have something     
         } else {
+            setLoading(true);
             setMovies(JSON.parse(localStorage.getItem("movies")))
             setCopyMovies(JSON.parse(localStorage.getItem("movies")))
+            setTimeout(() => {
+              setLoading(false);
+            }, 1500);
         }
 
         return () => {
@@ -113,18 +122,6 @@ function App() {
               setCopyMovies={setCopyMovies} />}
             />
 
-            <Route path="/search" element={<Browse 
-                closeFavorite={closeFavorite}
-                favoriteVisible={favoriteVisible}
-                setFavorite={setFavorite}
-                setMovies={setMovies}
-                movies={movies}
-                copyMovies={copyMovies}
-                setCopyMovies={setCopyMovies}
-                handleImageError={handleImageError}
-                genreList = {genreList()} />}
-            />
-
             <Route path="/browse"
               element={<Browse
                 closeFavorite={closeFavorite}
@@ -135,7 +132,9 @@ function App() {
                 copyMovies={copyMovies}
                 setCopyMovies={setCopyMovies}
                 handleImageError={handleImageError}
-                genreList = {genreList()}
+                genreList={genreList()}
+                loading={loading}
+                setLoading={setLoading}
                 />}
             />
 
